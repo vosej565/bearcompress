@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bearcompress.com/custom-sitemap.xml
