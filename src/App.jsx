@@ -64,6 +64,8 @@ function App() {
               {/* Other */}
               <Route path="/legal" element={<Legal />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/ko/contact" element={<Contact />} />
+              <Route path="/ko/legal" element={<Legal />} />
 
               {/* ---------------- Korean Pages ---------------- */}
               <Route path="/ko" element={<KoHomePage />} />
