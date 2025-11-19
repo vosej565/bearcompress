@@ -143,7 +143,7 @@ const KoConvertPage = ({ tool = 'convert' }) => {
   const details = toolDetails[tool];
   const pageUrl = `https://bearcompress.com${details.slug}`;
   const ogImage =
-    "https://horizons-cdn.hostinger.com/e25b2aee-4883-48af-8ec0-56c5bdb0ffed/e246105e4575a2fdb007988f1a613a34.jpg";
+    "https://bearcompress.com/og-image.jpg";
 
   const location = useLocation();
   const initialFiles = location.state?.initialFiles || null;
