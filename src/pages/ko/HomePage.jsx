@@ -85,7 +85,7 @@ const KoHomePage = () => {
   <meta property="og:url" content="https://bearcompress.com/ko" />
   <meta
     property="og:image"
-    content="https://horizons-cdn.hostinger.com/e25b2aee-4883-48af-8ec0-56c5bdb0ffed/e246105e4575a2fdb007988f1a613a34.jpg"
+    content="https://bearcompress.com/og-image.jpg"
   />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -102,7 +102,7 @@ const KoHomePage = () => {
   />
   <meta
     name="twitter:image"
-    content="https://horizons-cdn.hostinger.com/e25b2aee-4883-48af-8ec0-56c5bdb0ffed/e246105e4575a2fdb007988f1a613a34.jpg"
+    content="https://bearcompress.com/og-image.jpg"
   />
 
   {/* JSON-LD Schema */}
