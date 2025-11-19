@@ -158,6 +158,13 @@ const KoHomePage = () => {
 
 </Helmet>
 
+      <img
+        src="/og-image.jpg"
+        alt="BearCompress - 무료 이미지 압축 및 변환 도구"
+        className="hidden"
+      />
+
+
 
       <section className="text-center py-16 md:py-24">
         <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
