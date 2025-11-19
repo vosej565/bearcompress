@@ -21,8 +21,12 @@ const Footer = () => {
                         {footerText.rights}
                     </p>
                     <nav className="flex gap-4 text-sm text-gray-600">
-                        <Link to="/contact" className="hover:text-blue-600">{footerText.contact}</Link>
-                        <Link to="/legal" className="hover:text-blue-600">{footerText.legal}</Link>
+                        <Link to={`${base}/contact`} className="hover:text-blue-600">
+                            {footerText.contact}
+                        </Link>
+                        <Link to={`${base}/legal`} className="hover:text-blue-600">
+                            {footerText.legal}
+                        </Link>
                     </nav>
                 </div>
             </div>
