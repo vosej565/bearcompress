@@ -157,6 +157,7 @@ const KoConvertPage = ({ tool = 'convert' }) => {
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={pageUrl} />
 
+        <meta property="og:type" content="website" />
         <meta property="og:title" content={`${details.title} | BearCompress`} />
         <meta property="og:description" content={details.description} />
         <meta property="og:url" content={pageUrl} />
