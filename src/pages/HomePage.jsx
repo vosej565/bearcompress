@@ -81,6 +81,7 @@ const HomePage = () => {
           property="og:description"
           content="Free and secure image tools to compress and convert JPG, PNG, WebP, and HEIC images instantly."
         />
+		<meta property="og:type" content="website" />
         <meta property="og:url" content="https://bearcompress.com/" />
         <meta property="og:image" content="https://bearcompress.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
