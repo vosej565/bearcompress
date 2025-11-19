@@ -149,6 +149,12 @@ const HomePage = () => {
         </script>
       </Helmet>
 
+		 <img
+     	 src="/og-image.jpg"
+     	 alt="BearCompress - Image Tools"
+     	 className="hidden"
+    	/>
+
       <section className="text-center py-16 md:py-24">
         <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
           Free Online Image Compressor & Converter
