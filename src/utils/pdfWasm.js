@@ -1,69 +1,78 @@
-let worker = null;
-let wasmReady = false;
-let pendingResolve = null;
-let pendingReject = null;
+// 🔥 글로벌 싱글톤 저장용
+if (!window.__pdfWasmSingleton) {
+  window.__pdfWasmSingleton = {
+    worker: null,
+    wasmReady: false,
+    pendingResolve: null,
+    pendingReject: null,
+    initializing: false
+  };
+}
 
+const singleton = window.__pdfWasmSingleton;
+
+// -------------------
+// Worker 초기화
+// -------------------
 function initWorker() {
-  return new Promise((resolve, reject) => {
-    worker = new Worker("/pdf-wasm/worker.js");
+  // 이미 초기화 중이면 그 Promise를 기다림
+  if (singleton.initializing) {
+    return singleton.initializing;
+  }
 
-    worker.onmessage = (e) => {
+  singleton.initializing = new Promise((resolve, reject) => {
+    singleton.worker = new Worker("/pdf-wasm/worker.js");
 
-      // 🔥 Go WASM 로그
+    singleton.worker.onmessage = (e) => {
       if (e.data.log) {
         console.log("[WASM]", e.data.log);
         return;
       }
 
-      // 🔥 에러 처리
       if (e.data.error) {
-        if (pendingReject) pendingReject(e.data.error);
-        pendingResolve = null;
-        pendingReject = null;
+        if (singleton.pendingReject) singleton.pendingReject(e.data.error);
+        singleton.pendingResolve = null;
+        singleton.pendingReject = null;
         return;
       }
 
-      // 🔥 ready 신호 받음 → WASM 초기화 완료
       if (e.data.ready) {
-        wasmReady = true;
+        singleton.wasmReady = true;
         resolve(true);
         return;
       }
 
-      // 🔥 압축 결과 받음
-      if (e.data.result && pendingResolve) {
-        pendingResolve(new Blob([e.data.result], { type: "application/pdf" }));
-        pendingResolve = null;
-        pendingReject = null;
+      if (e.data.result && singleton.pendingResolve) {
+        singleton.pendingResolve(
+          new Blob([e.data.result], { type: "application/pdf" })
+        );
+        singleton.pendingResolve = null;
+        singleton.pendingReject = null;
       }
     };
   });
+
+  return singleton.initializing;
 }
 
+// -------------------
+// PDF 압축 함수
+// -------------------
 export async function compressPdfInWasm(file) {
-  // 1) worker 없으면 생성
-  if (!worker) {
+  if (!singleton.worker) {
     await initWorker();
   }
 
-  // 2) 🔥 WASM 초기화가 완료될 때까지 반드시 대기
-  if (!wasmReady) {
-    await new Promise((resolve) => {
-      const timer = setInterval(() => {
-        if (wasmReady) {
-          clearInterval(timer);
-          resolve();
-        }
-      }, 10);
-    });
+  // ready 될 때까지 대기
+  if (!singleton.wasmReady) {
+    await initWorker();
   }
 
-  // 3) 압축 시작
   return new Promise(async (resolve, reject) => {
-    pendingResolve = resolve;
-    pendingReject = reject;
+    singleton.pendingResolve = resolve;
+    singleton.pendingReject = reject;
 
-    worker.postMessage({
+    singleton.worker.postMessage({
       file: await file.arrayBuffer(),
     });
   });
