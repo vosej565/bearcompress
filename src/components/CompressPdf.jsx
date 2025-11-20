@@ -44,11 +44,15 @@ export default function CompressPdf() {
   return (
     <div className="p-6 border rounded-xl bg-white shadow-md max-w-xl mx-auto">
       <input
-        type="file"
-        accept="application/pdf"
-        onChange={(e) => setFile(e.target.files[0])}
-        className="mb-4"
-      />
+  type="file"
+  accept="application/pdf"
+  onChange={(e) => {
+    const f = e.target.files[0];
+    console.log("Selected file size:", f?.size);
+    setFile(f);
+  }}
+  className="mb-4"
+/>
 
       <button
         onClick={handleCompress}
