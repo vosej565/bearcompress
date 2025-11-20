@@ -92,6 +92,21 @@ const toolDetails = {
     slug: '/compress/heic'
   },
 
+  'compress-pdf': {
+  title: 'Compress PDF',
+  description: 'Compress PDF files online using browser-based processing.',
+  keywords: 'compress pdf, pdf compressor, reduce pdf size',
+  h1: 'Compress PDF',
+  p: (
+    <>
+      Reduce file size of PDF documents securely in your browser.<br />
+      Supports multi-page and image-based PDFs.
+    </>
+  ),
+  slug: '/compress/pdf'
+},
+
+
   /* ⭐⭐ 추가된 PDF 압축 기능 ⭐⭐ */
   'compress-pdf': {
     title: 'Compress PDF',

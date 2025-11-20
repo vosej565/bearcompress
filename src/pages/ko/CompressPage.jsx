@@ -92,6 +92,21 @@ const toolDetails = {
     ),
     slug: '/ko/compress/heic'
   },
+
+  'compress-pdf': {
+  title: 'PDF 압축',
+  description: '브라우저에서 안전하게 PDF 파일 용량을 줄이세요. 서버 업로드 없이 바로 처리됩니다.',
+  keywords: 'pdf 압축, pdf 용량 줄이기, pdf compressor, pdf 사이즈 감소',
+  h1: 'PDF 압축',
+  p: (
+    <>
+      브라우저에서 직접 PDF 문서의 용량을 안전하게 줄여보세요.<br />
+      여러 페이지 PDF와 이미지 기반 PDF도 지원합니다.
+    </>
+  ),
+  slug: '/compress/pdf'
+},
+
 };
 
 

@@ -47,6 +47,7 @@ const Header = () => {
                 <DropdownMenuItem asChild><Link to={`${base}/compress/png`}>PNG Compressor</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/compress/webp`}>WebP Compressor</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/compress/heic`}>HEIC Compressor</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to={`${base}/compress/pdf`}>PDF Compressor</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/convert/jpg-to-png`}>JPG to PNG</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/convert/png-to-jpg`}>PNG to JPG</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/convert/webp-to-jpg`}>WebP to JPG</Link></DropdownMenuItem>
