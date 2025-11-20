@@ -3,7 +3,6 @@ importScripts("/pdf-wasm/wasm_exec.js");
 const go = new Go();
 let wasmReady = false;
 
-// Load WASM
 WebAssembly.instantiateStreaming(fetch("/pdf-wasm/pdfcomprezzor.wasm"), go.importObject)
   .then((result) => {
     go.run(result.instance);
@@ -14,25 +13,19 @@ WebAssembly.instantiateStreaming(fetch("/pdf-wasm/pdfcomprezzor.wasm"), go.impor
     postMessage({ error: "WASM load failed: " + err });
   });
 
-onmessage = async (e) => {
+onmessage = (e) => {
   if (!wasmReady) {
     postMessage({ error: "WASM is not ready yet" });
     return;
   }
 
-  const fileArray = new Uint8Array(e.data.file);
+  const input = new Uint8Array(e.data.file);
+  const retInfo = { l: 0 };
 
   try {
-    // prepare return length holder
-    const returnInfo = { l: 0 };
-
-    // Call Go function — THIS MATCHES YOUR main.go
-    const newSize = self.compress(fileArray, returnInfo);
-
-    const resultBytes = fileArray.slice(0, returnInfo.l);
-
-    postMessage({ result: resultBytes.buffer }, [resultBytes.buffer]);
-
+    self.compress(input, retInfo);
+    const result = input.slice(0, retInfo.l);
+    postMessage({ result: result.buffer }, [result.buffer]);
   } catch (err) {
     postMessage({ error: err.toString() });
   }
