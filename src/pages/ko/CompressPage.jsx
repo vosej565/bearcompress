@@ -93,19 +93,19 @@ const toolDetails = {
     slug: '/ko/compress/heic'
   },
 
-  'compress-pdf': {
-  title: 'PDF 압축',
-  description: '브라우저에서 안전하게 PDF 파일 용량을 줄이세요. 서버 업로드 없이 바로 처리됩니다.',
-  keywords: 'pdf 압축, pdf 용량 줄이기, pdf compressor, pdf 사이즈 감소',
-  h1: 'PDF 압축',
+  "compress-pdf": {
+  title: "PDF 압축",
+  description: "브라우저에서 직접 PDF 파일 용량을 안전하게 줄여보세요.",
+  keywords: "pdf 압축, pdf 줄이기, pdf compressor",
+  h1: "PDF 압축",
   p: (
     <>
       브라우저에서 직접 PDF 문서의 용량을 안전하게 줄여보세요.<br />
       여러 페이지 PDF와 이미지 기반 PDF도 지원합니다.
     </>
   ),
-  slug: '/compress/pdf'
-},
+  slug: "/ko/compress/pdf",
+  },
 
 };
 
@@ -113,7 +113,7 @@ const toolDetails = {
 const KoCompressPage = ({ tool = 'compress' }) => {
   const details = toolDetails[tool];
   const pageUrl = `https://bearcompress.com${details.slug}`;
-  const ogImage = "https://horizons-cdn.hostinger.com/e25b2aee-4883-48af-8ec0-56c5bdb0ffed/e246105e4575a2fdb007988f1a613a34.jpg";
+  const ogImage = "https://bearcompress.com/og-image.jpg";
 
   const location = useLocation();
   const initialFiles = location.state?.initialFiles || null;
@@ -162,15 +162,21 @@ const KoCompressPage = ({ tool = 'compress' }) => {
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">{details.p}</p>
       </div>
 
-      <CompressImages
-        initialFiles={initialFiles}
-        uiText={{
-        dropLabel: '여기에 이미지를 끌어다 놓으세요',
-        orLabel: '또는',
-        buttonLabel: '이미지 선택',
-        supportLabel: '지원 형식: JPG, PNG, WebP, HEIC',
-        }}
-      />
+      
+      {tool === "compress-pdf" ? (
+        <CompressPdf />
+    ) : (
+    <CompressImages
+    initialFiles={initialFiles}
+    uiText={{
+      dropLabel: '여기에 이미지를 끌어다 놓으세요',
+      orLabel: '또는',
+      buttonLabel: '이미지 선택',
+      supportLabel: '지원 형식: JPG, PNG, WebP, HEIC',
+          }}
+        />
+      )}
+
     </>
   );
 };
