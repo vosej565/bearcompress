@@ -51,6 +51,8 @@ function App() {
               <Route path="/compress/png" element={<CompressPage tool="compress-png" />} />
               <Route path="/compress/webp" element={<CompressPage tool="compress-webp" />} />
               <Route path="/compress/heic" element={<CompressPage tool="compress-heic" />} />
+              <Route path="/compress/pdf" element={<CompressPage tool="compress-pdf" />} />
+
 
               {/* Conversion (EN) */}
               <Route path="/convert" element={<ConvertPage tool="convert" />} />
@@ -76,6 +78,8 @@ function App() {
               <Route path="/ko/compress/png" element={<KoCompressPage tool="compress-png" />} />
               <Route path="/ko/compress/webp" element={<KoCompressPage tool="compress-webp" />} />
               <Route path="/ko/compress/heic" element={<KoCompressPage tool="compress-heic" />} />
+              <Route path="/ko/compress/pdf" element={<KoCompressPage tool="compress-pdf" />} />
+
 
               {/* Conversion (KO) */}
               <Route path="/ko/convert" element={<KoConvertPage tool="convert" />} />
