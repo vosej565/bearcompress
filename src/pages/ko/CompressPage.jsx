@@ -2,6 +2,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation, Link } from 'react-router-dom';
 import CompressImages from '@/components/CompressImages';
+import CompressPdf from "@/components/CompressPdf";
+
 
 const toolDetails = {
   'compress': {
@@ -164,18 +166,19 @@ const KoCompressPage = ({ tool = 'compress' }) => {
 
       
       {tool === "compress-pdf" ? (
-        <CompressPdf />
-    ) : (
+    <CompressPdf />
+) : (
     <CompressImages
-    initialFiles={initialFiles}
-    uiText={{
-      dropLabel: '여기에 이미지를 끌어다 놓으세요',
-      orLabel: '또는',
-      buttonLabel: '이미지 선택',
-      supportLabel: '지원 형식: JPG, PNG, WebP, HEIC',
-          }}
-        />
-      )}
+        initialFiles={initialFiles}
+        uiText={{
+          dropLabel: '여기에 이미지를 끌어다 놓으세요',
+          orLabel: '또는',
+          buttonLabel: '이미지 선택',
+          supportLabel: '지원 형식: JPG, PNG, WebP, HEIC',
+        }}
+    />
+)}
+
 
     </>
   );

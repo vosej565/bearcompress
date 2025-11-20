@@ -1,41 +1,36 @@
 importScripts("/pdf-wasm/wasm_exec.js");
 
 const go = new Go();
+let wasmInstance = null;
 let wasmReady = false;
 
-// ⬇️ WASM 로드
+// WASM 실행은 반드시 "처음 한번만" 실행해야 함
 WebAssembly.instantiateStreaming(fetch("/pdf-wasm/pdfcomprezzor.wasm"), go.importObject)
   .then((result) => {
-    go.run(result.instance);
+    wasmInstance = result.instance;
+    go.run(wasmInstance);   // 단 한번만 실행해야 함!
     wasmReady = true;
     postMessage({ ready: true });
   })
-  .catch((err) => {
-    postMessage({ error: "WASM load failed: " + err });
-  });
+  .catch((err) => postMessage({ error: "WASM load failed: " + err }));
 
-// ⬇️ 메시지 핸들러
 onmessage = (e) => {
   if (!wasmReady) {
-    return postMessage({ error: "WASM is not ready yet" });
+    postMessage({ error: "WASM is not ready yet" });
+    return;
   }
 
-  const input = new Uint8Array(e.data.file);
-
-  // ⭐⭐ output 배열은 반드시 input보다 충분히 크게 만들기!
-  // 압축 후 PDF 크기가 input보다 작아지므로 input과 동일하면 충분.
-  const output = new Uint8Array(input.byteLength);
-
-  const retInfo = { l: 0 };
-
   try {
-    // ⭐⭐ WASM compress 호출 — 결과는 output 버퍼에 채워짐
-    self.compress(input, output, retInfo);
+    const inputBytes = new Uint8Array(e.data.file);
+    const outputBytes = new Uint8Array(inputBytes.length * 2); // output 버퍼 확보
+    const retInfo = { l: 0 };
 
-    // ⭐⭐ 실제 길이만큼 slice 후 ArrayBuffer로 전달
-    const finalPdf = output.slice(0, retInfo.l);
+    // Go 함수 호출 (compress가 input → output 구조일 수도 있음)
+    const written = self.compress(inputBytes, outputBytes, retInfo);
 
-    postMessage({ result: finalPdf.buffer }, [finalPdf.buffer]);
+    const finalBytes = outputBytes.slice(0, retInfo.l);
+    postMessage({ result: finalBytes.buffer }, [finalBytes.buffer]);
+
   } catch (err) {
     postMessage({ error: err.toString() });
   }
