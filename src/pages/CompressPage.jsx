@@ -104,21 +104,6 @@ const toolDetails = {
     </>
   ),
   slug: '/compress/pdf'
-},
-
-
-  /* ⭐⭐ 추가된 PDF 압축 기능 ⭐⭐ */
-  'compress-pdf': {
-    title: 'Compress PDF',
-    description: 'Compress PDF files online quickly and securely.',
-    keywords: 'compress pdf, pdf compressor, reduce pdf size',
-    h1: 'Compress PDF',
-    p: (
-      <>
-        Reduce PDF file size directly in your browser — fast and secure.
-      </>
-    ),
-    slug: '/compress/pdf'
   },
 };
 
