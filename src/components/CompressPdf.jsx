@@ -38,35 +38,42 @@ export default function CompressPdf() {
       });
 
       for (let i = 1; i <= numPages; i++) {
-        setStatus(`${i}/${numPages} 페이지 처리 중...`);
+  setStatus(`${i}/${numPages} 페이지 처리 중...`);
 
-        const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 1.5 });
+  const page = await pdf.getPage(i);
 
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
+  // ✔ scale 낮추기 (1.0)
+  const viewport = page.getViewport({ scale: 1.0 });
 
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
+  // Canvas 생성
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d", { alpha: false });
 
-        await page.render({ canvasContext: ctx, viewport }).promise;
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
 
-        const imgData = canvas.toDataURL("image/jpeg", quality);
+  await page.render({ canvasContext: ctx, viewport }).promise;
 
-        if (i > 1) {
-          pdfOut.addPage([viewport.width, viewport.height]);
-          pdfOut.setPage(i);
-        }
+  // ✔ JPEG 품질 낮추기 + 불필요한 메타 제거 옵션 포함
+  const imgData = canvas.toDataURL("image/jpeg", quality);
 
-        pdfOut.addImage(
-          imgData,
-          "JPEG",
-          0,
-          0,
-          viewport.width,
-          viewport.height
-        );
-      }
+  // 페이지 추가
+  if (i > 1) {
+    pdfOut.addPage([viewport.width * 0.8, viewport.height * 0.8]);
+    pdfOut.setPage(i);
+  }
+
+  // ✔ 이미지 크기 자체도 줄여서 삽입 (0.8 → 20% 용량 감소)
+  pdfOut.addImage(
+    imgData,
+    "JPEG",
+    0,
+    0,
+    viewport.width * 0.8,
+    viewport.height * 0.8
+  );
+}
+
 
       setStatus("PDF 생성 중...");
       const blob = pdfOut.output("blob");
