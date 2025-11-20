@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import * as pdfjsLib from "pdfjs-dist";
-import workerSrc from "pdfjs-dist/build/pdf.worker.mjs";
-import { jsPDF } from "jspdf";
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
+// PDF.js worker 설정 (Vite 전용)
+import pdfWorkerUrl from "pdfjs-dist/build/pdf.worker.mjs?worker";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
+
 
 export default function CompressPdf() {
   const [file, setFile] = useState(null);
