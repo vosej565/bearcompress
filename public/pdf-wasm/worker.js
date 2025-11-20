@@ -1,51 +1,65 @@
 importScripts("/pdf-wasm/wasm_exec.js");
 
 const go = new Go();
-let wasm = null;
+let wasmInstance = null;
 let wasmReady = false;
+let initPromise = null;
 
-async function init() {
-  if (wasmReady) return;
+// ======================
+// WASM 초기화 (한 번만)
+// ======================
+function initWasm() {
+  if (initPromise) return initPromise;
 
-  const result = await WebAssembly.instantiateStreaming(
+  initPromise = WebAssembly.instantiateStreaming(
     fetch("/pdf-wasm/pdfcomprezzor.wasm"),
     go.importObject
-  );
+  )
+    .then((result) => {
+      wasmInstance = result.instance;
+      go.run(wasmInstance);     // 단 한 번 실행해야 함!
+      wasmReady = true;
+      postMessage({ ready: true });
+    })
+    .catch((err) => {
+      postMessage({ error: "WASM load failed: " + err });
+    });
 
-  wasm = result.instance;
-
-  // 고런타임을 백그라운드에서 유지하기 위한 비동기 실행
-  go.run(wasm);
-
-  wasmReady = true;
-  postMessage({ ready: true });
+  return initPromise;
 }
 
+// ======================
+// PDF 압축 처리
+// ======================
 self.onmessage = async (e) => {
-  await init();
+  await initWasm();
+
+  if (!wasmReady) {
+    postMessage({ error: "WASM is not ready yet" });
+    return;
+  }
 
   try {
     const inputBytes = new Uint8Array(e.data.file);
     const retInfo = { l: 0 };
 
-    // Go WASM은 JS object를 직접 못 받기 때문에,
-    // JS에서 proxy 역할을 수행
-    const beforeLen = inputBytes.length;
+    // Go의 Log() 호출 콜백
+    const logCallback = (ctx, msg) => {
+      // postMessage({ log: msg });
+    };
 
-    // Go 코드가 inputBytes 내부를 직접 수정함
-    self.compress(inputBytes, retInfo);
+    // ⭐ Go 코드: onCompress(inputBytes, retInfo, logCallback)
+    self.compress(inputBytes, retInfo, logCallback);
 
-    const afterLen = retInfo.l;
-
-    if (!afterLen || afterLen <= 0) {
+    const outLen = retInfo.l || 0;
+    if (outLen <= 0) {
       postMessage({ error: "Compression failed: output length is 0" });
       return;
     }
 
-    const resultBytes = inputBytes.slice(0, afterLen);
+    const resultBytes = inputBytes.slice(0, outLen);
 
     postMessage({ result: resultBytes.buffer }, [resultBytes.buffer]);
-
   } catch (err) {
     postMessage({ error: err.toString() });
   }
