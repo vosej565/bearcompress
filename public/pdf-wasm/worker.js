@@ -45,8 +45,9 @@ self.onmessage = async (e) => {
 
     // Go의 Log() 호출 콜백
     const logCallback = (ctx, msg) => {
-      // postMessage({ log: msg });
-    };
+-   // postMessage({ log: msg });
++   postMessage({ log: msg });
+};
 
     // ⭐ Go 코드: onCompress(inputBytes, retInfo, logCallback)
     self.compress(inputBytes, retInfo, logCallback);

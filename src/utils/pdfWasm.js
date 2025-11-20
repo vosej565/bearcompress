@@ -8,10 +8,17 @@ function initWorker() {
     worker = new Worker("/pdf-wasm/worker.js");
 
     worker.onmessage = (e) => {
+
+      // 🔥 Go WASM 로그 받기
+      if (e.data.log) {
+        console.log("[WASM]", e.data.log);
+        return;
+      }
+
       if (e.data.error) {
         if (pendingReject) pendingReject(e.data.error);
-        pendingReject = null;
         pendingResolve = null;
+        pendingReject = null;
         return;
       }
 
@@ -21,7 +28,6 @@ function initWorker() {
         return;
       }
 
-      // WASM 압축 결과
       if (e.data.result && pendingResolve) {
         pendingResolve(new Blob([e.data.result], { type: "application/pdf" }));
         pendingResolve = null;
@@ -36,7 +42,6 @@ export async function compressPdfInWasm(file) {
     await initWorker();
   }
 
-  // 다음 작업을 위해 Promise 저장
   return new Promise(async (resolve, reject) => {
     pendingResolve = resolve;
     pendingReject = reject;
