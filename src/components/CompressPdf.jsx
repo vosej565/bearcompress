@@ -1,15 +1,31 @@
 import React, { useState } from "react";
 import { compressPdfInWasm } from "@/utils/pdfWasm";
+import { useLocation } from "react-router-dom";
 
 export default function CompressPdf() {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState("");
 
+  const location = useLocation();
+  const isKorean = location.pathname.startsWith("/ko");
+
+  // 🔵 다국어 텍스트 정의
+  const text = {
+    selectFile: isKorean ? "파일 선택" : "Select File",
+    noFile: isKorean ? "PDF 파일을 선택하세요!" : "Please select a PDF file!",
+    compressing: isKorean
+      ? "압축 중... 잠시만 기다려 주세요."
+      : "Compressing... Please wait.",
+    complete: isKorean ? "압축 완료! 다운로드가 시작됩니다." : "Compression complete! Download started.",
+    startBtn: isKorean ? "압축 시작" : "Start Compression",
+    error: isKorean ? "오류 발생: " : "Error: ",
+  };
+
   const handleCompress = async () => {
-    if (!file) return alert("PDF 파일을 선택하세요!");
+    if (!file) return alert(text.noFile);
 
     try {
-      setStatus("압축 중... 잠시만 기다려 주세요.");
+      setStatus(text.compressing);
 
       const compressedBlob = await compressPdfInWasm(file);
 
@@ -19,23 +35,31 @@ export default function CompressPdf() {
       a.download = `compressed_${file.name}`;
       a.click();
 
-      setStatus("압축 완료!");
+      setStatus(text.complete);
     } catch (err) {
-      setStatus("오류 발생: " + err);
+      setStatus(text.error + err);
     }
   };
 
   return (
-    <div>
-      <input type="file" accept="application/pdf" onChange={(e) => setFile(e.target.files[0])} />
+    <div className="p-6 border rounded-xl bg-white shadow-md max-w-xl mx-auto">
+      <input
+        type="file"
+        accept="application/pdf"
+        onChange={(e) => setFile(e.target.files[0])}
+        className="mb-4"
+      />
+
       <button
         onClick={handleCompress}
-        className="bg-blue-600 text-white px-4 py-2 rounded-md"
+        className="bg-blue-600 hover:bg-blue-700 text-white w-full py-2 rounded-lg"
       >
-        압축 시작
+        {text.startBtn}
       </button>
 
-      {status && <p className="mt-2 text-gray-700">{status}</p>}
+      {status && (
+        <p className="mt-4 text-gray-700 text-sm whitespace-pre-line">{status}</p>
+      )}
     </div>
   );
 }

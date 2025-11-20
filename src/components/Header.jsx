@@ -19,6 +19,7 @@ const Header = () => {
     compress: { en: 'COMPRESS IMAGE', ko: '이미지 압축' },
     convert: { en: 'CONVERT IMAGE', ko: '이미지 변환' },
     more: { en: 'MORE', ko: '더보기' },
+    pdf: { en: 'PDF Compressor', ko: 'PDF 압축' }
   };
 
   const currentLang = isKorean ? 'ko' : 'en';
@@ -34,6 +35,7 @@ const Header = () => {
               src="https://horizons-cdn.hostinger.com/e25b2aee-4883-48af-8ec0-56c5bdb0ffed/9ab12f7c8f77c9363a39b7321062c028.png"
             />
           </Link>
+
           <nav className="hidden md:flex items-center gap-6 text-lg font-medium">
             <NavLink to={`${base}/compress`}>{navLinks.compress[currentLang]}</NavLink>
             <NavLink to={`${base}/convert`}>{navLinks.convert[currentLang]}</NavLink>
@@ -42,12 +44,18 @@ const Header = () => {
               <DropdownMenuTrigger className="flex items-center gap-1">
                 {navLinks.more[currentLang]} <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
+
               <DropdownMenuContent>
                 <DropdownMenuItem asChild><Link to={`${base}/compress/jpg`}>JPG Compressor</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/compress/png`}>PNG Compressor</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/compress/webp`}>WebP Compressor</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/compress/heic`}>HEIC Compressor</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link to={`${base}/compress/pdf`}>PDF Compressor</Link></DropdownMenuItem>
+
+                {/* PDF compressor */}
+                <DropdownMenuItem asChild>
+                  <Link to={`${base}/compress/pdf`}>{navLinks.pdf[currentLang]}</Link>
+                </DropdownMenuItem>
+
                 <DropdownMenuItem asChild><Link to={`${base}/convert/jpg-to-png`}>JPG to PNG</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/convert/png-to-jpg`}>PNG to JPG</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/convert/webp-to-jpg`}>WebP to JPG</Link></DropdownMenuItem>
