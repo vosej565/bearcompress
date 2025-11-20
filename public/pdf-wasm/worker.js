@@ -1,35 +1,50 @@
 importScripts("/pdf-wasm/wasm_exec.js");
 
 const go = new Go();
-let wasmInstance = null;
+let wasm = null;
 let wasmReady = false;
 
-// WASM 실행은 반드시 "처음 한번만" 실행해야 함
-WebAssembly.instantiateStreaming(fetch("/pdf-wasm/pdfcomprezzor.wasm"), go.importObject)
-  .then((result) => {
-    wasmInstance = result.instance;
-    go.run(wasmInstance);   // 단 한번만 실행해야 함!
-    wasmReady = true;
-    postMessage({ ready: true });
-  })
-  .catch((err) => postMessage({ error: "WASM load failed: " + err }));
+async function init() {
+  if (wasmReady) return;
 
-onmessage = (e) => {
-  if (!wasmReady) {
-    postMessage({ error: "WASM is not ready yet" });
-    return;
-  }
+  const result = await WebAssembly.instantiateStreaming(
+    fetch("/pdf-wasm/pdfcomprezzor.wasm"),
+    go.importObject
+  );
+
+  wasm = result.instance;
+
+  // 고런타임을 백그라운드에서 유지하기 위한 비동기 실행
+  go.run(wasm);
+
+  wasmReady = true;
+  postMessage({ ready: true });
+}
+
+self.onmessage = async (e) => {
+  await init();
 
   try {
     const inputBytes = new Uint8Array(e.data.file);
-    const outputBytes = new Uint8Array(inputBytes.length * 2); // output 버퍼 확보
     const retInfo = { l: 0 };
 
-    // Go 함수 호출 (compress가 input → output 구조일 수도 있음)
-    const written = self.compress(inputBytes, outputBytes, retInfo);
+    // Go WASM은 JS object를 직접 못 받기 때문에,
+    // JS에서 proxy 역할을 수행
+    const beforeLen = inputBytes.length;
 
-    const finalBytes = outputBytes.slice(0, retInfo.l);
-    postMessage({ result: finalBytes.buffer }, [finalBytes.buffer]);
+    // Go 코드가 inputBytes 내부를 직접 수정함
+    self.compress(inputBytes, retInfo);
+
+    const afterLen = retInfo.l;
+
+    if (!afterLen || afterLen <= 0) {
+      postMessage({ error: "Compression failed: output length is 0" });
+      return;
+    }
+
+    const resultBytes = inputBytes.slice(0, afterLen);
+
+    postMessage({ result: resultBytes.buffer }, [resultBytes.buffer]);
 
   } catch (err) {
     postMessage({ error: err.toString() });
