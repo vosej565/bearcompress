@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import * as pdfjsLib from "pdfjs-dist";
+import { jsPDF } from "jspdf";
 
-// PDF.js worker (Vite)
-import Worker from "pdfjs-dist/build/pdf.worker.mjs?worker";
+// PDF.js worker (Vite 전용)
+import workerSrc from "pdfjs-dist/build/pdf.worker.mjs?url";
 
-// Register worker (pdfjs v4)
-pdfjsLib.GlobalWorkerOptions.workerSrc = new Worker();
-
-
+// PDF.js v4 공식 방식 — workerSrc는 URL 문자열만 허용됨
+pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
 
 export default function CompressPdf() {
   const [file, setFile] = useState(null);
@@ -35,7 +34,7 @@ export default function CompressPdf() {
       const pdfOut = new jsPDF({
         orientation: "p",
         unit: "pt",
-        format: "a4", // 페이지 기준은 A4로 고정하거나, 페이지마다 조정 가능
+        format: "a4",
       });
 
       for (let i = 1; i <= numPages; i++) {
@@ -44,7 +43,6 @@ export default function CompressPdf() {
         const page = await pdf.getPage(i);
         const viewport = page.getViewport({ scale: 1.5 });
 
-        // Canvas 생성
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
 
@@ -73,7 +71,6 @@ export default function CompressPdf() {
       setStatus("PDF 생성 중...");
       const blob = pdfOut.output("blob");
 
-      // 파일 다운로드
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
