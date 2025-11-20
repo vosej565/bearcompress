@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import CompressImages from '@/components/CompressImages';
 import { Link } from "react-router-dom";
+import CompressPdf from "../components/CompressPdf";
 
 
 const toolDetails = {
@@ -77,7 +78,7 @@ const toolDetails = {
   'compress-heic': {
     title: 'Compress HEIC',
     description: 'Compress HEIC images online.',
-    keywords: 'compress heic, heic compressor',
+    keywords: 'compress heic, heic compressor, reduce heic',
     h1: 'Compress HEIC Images',
     p: (
       <>
@@ -89,6 +90,20 @@ const toolDetails = {
       </>
     ),
     slug: '/compress/heic'
+  },
+
+  /* ⭐⭐ 추가된 PDF 압축 기능 ⭐⭐ */
+  'compress-pdf': {
+    title: 'Compress PDF',
+    description: 'Compress PDF files online quickly and securely.',
+    keywords: 'compress pdf, pdf compressor, reduce pdf size',
+    h1: 'Compress PDF',
+    p: (
+      <>
+        Reduce PDF file size directly in your browser — fast and secure.
+      </>
+    ),
+    slug: '/compress/pdf'
   },
 };
 
@@ -124,7 +139,6 @@ const CompressPage = ({ tool = 'compress' }) => {
         <meta name="twitter:description" content={details.description} />
         <meta name="twitter:image" content={ogImage} />
 
-        {/* JSON-LD structured data */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -137,9 +151,9 @@ const CompressPage = ({ tool = 'compress' }) => {
       </Helmet>
 
       <img
-      src="/og-image.jpg"
-      alt={`${details.title} - BearCompress`}
-      className="hidden"
+        src="/og-image.jpg"
+        alt={`${details.title} - BearCompress`}
+        className="hidden"
       />
 
       <div className="text-center mb-8">
@@ -147,9 +161,15 @@ const CompressPage = ({ tool = 'compress' }) => {
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">{details.p}</p>
       </div>
 
-      <CompressImages initialFiles={initialFiles} />
+      {/* ⭐⭐ PDF이면 CompressPdf, 나머지는 CompressImages ⭐⭐ */}
+      {tool === "compress-pdf" ? (
+        <CompressPdf />
+      ) : (
+        <CompressImages initialFiles={initialFiles} />
+      )}
     </>
   );
 };
 
 export default CompressPage;
+
