@@ -5,8 +5,7 @@ export async function compressPdfInWasm(file) {
     worker.onmessage = (e) => {
       if (e.data.error) reject(e.data.error);
       else {
-        const blob = new Blob([e.data.result], { type: "application/pdf" });
-        resolve(blob);
+        resolve(new Blob([e.data.result], { type: "application/pdf" }));
       }
       worker.terminate();
     };

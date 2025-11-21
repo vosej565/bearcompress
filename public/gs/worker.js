@@ -1,36 +1,28 @@
-importScripts("/gs/gs.js");
+// public/gs/worker.js
 
-let ModuleReady = false;
+importScripts("/gs/gs.js");  // MODULARIZE=1일 때도 그냥 로드만 하면 됨
 
-Module = {
-  onRuntimeInitialized() {
-    ModuleReady = true;
-    console.log("Ghostscript WASM ready");
-  }
-};
+let GS = null;
 
 self.onmessage = async (e) => {
-  const input = new Uint8Array(e.data.file);
+  const fileBuffer = e.data.file;
+
+  // Load Ghostscript only once
+  if (!GS) {
+    GS = await GhostscriptModule({
+      locateFile: (path) => {
+        if (path.endsWith(".wasm")) return "/gs/gs.wasm";
+        return path;
+      },
+    });
+
+    console.log("Ghostscript WASM loaded!");
+  }
 
   try {
-    // 준비 안됐으면 대기
-    if (!ModuleReady) {
-      await new Promise(r => {
-        const check = setInterval(() => {
-          if (ModuleReady) {
-            clearInterval(check);
-            r();
-          }
-        }, 10);
-      });
-    }
+    GS.FS.writeFile("input.pdf", new Uint8Array(fileBuffer));
 
-    // PDF 쓰기
-    Module.FS.writeFile("input.pdf", input);
-
-    // args 배열 작성
-    const args = [
-      "gs",
+    GS.callMain([
       "-sDEVICE=pdfwrite",
       "-dCompatibilityLevel=1.4",
       "-dPDFSETTINGS=/ebook",
@@ -38,20 +30,11 @@ self.onmessage = async (e) => {
       "-dQUIET",
       "-dBATCH",
       "-sOutputFile=output.pdf",
-      "input.pdf"
-    ];
+      "input.pdf",
+    ]);
 
-    // gs_main 직접 호출 (MODULARIZE=0 환경)
-    Module.ccall(
-      "gs_main",
-      "number",
-      ["number", "number"],
-      [args.length, Module.allocateUTF8OnStack(args.join("\0"))]
-    );
-
-    // 결과 읽기
-    const output = Module.FS.readFile("output.pdf");
-    self.postMessage({ result: output.buffer }, [output.buffer]);
+    const out = GS.FS.readFile("output.pdf");
+    self.postMessage({ result: out.buffer }, [out.buffer]);
 
   } catch (err) {
     self.postMessage({ error: err.toString() });
