@@ -256,13 +256,16 @@ export default defineConfig({
 	build: {
 		rollupOptions: {
 			external: [
-				'@babel/parser',
-				'@babel/traverse',
-				'@babel/generator',
-				'@babel/types'
-				'/gs/worker.js',
-            	'/gs/gs-worker.js'
-			]
+    '@babel/parser',
+    '@babel/traverse',
+    '@babel/generator',
+    '@babel/types',
+
+    // 아래 두 줄이 반드시 "배열 내부"에 있어야 함
+    "/gs/worker.js",
+    "/gs/gs-worker.js"
+]
+
 		}
 	}
 });
