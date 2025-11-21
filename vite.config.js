@@ -260,6 +260,8 @@ export default defineConfig({
 				'@babel/traverse',
 				'@babel/generator',
 				'@babel/types'
+				'/gs/worker.js',
+            	'/gs/gs-worker.js'
 			]
 		}
 	}
