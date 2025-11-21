@@ -1,34 +1,19 @@
-// src/utils/pdfWasm.js
+export async function _GSPS2PDF( dataStruct,
+                                   responseCallback,
+                                   progressCallback,
+                                   statusUpdateCallback){
+  const worker = new Worker(
+    new URL('./background-worker.js', import.meta.url),
+    {type: 'module'}
+  );
+  worker.postMessage({ data: dataStruct, target: 'wasm'});
+  return new Promise((resolve, reject)=>{
+    const listener = (e) => {
+      resolve(e.data)
+      worker.removeEventListener('message', listener)
+      setTimeout(()=> worker.terminate(), 0);
+    }
+    worker.addEventListener('message', listener);
+  })
 
-export async function compressPdfInWasm(file) {
-  return new Promise(async (resolve, reject) => {
-    const worker = new Worker("/gs/worker.js");
-
-    worker.onmessage = (e) => {
-      const { result, error } = e.data || {};
-
-      if (error) {
-        console.error("Worker error:", error);
-        reject(error);
-        worker.terminate();
-        return;
-      }
-
-      if (result) {
-        const blob = new Blob([result], { type: "application/pdf" });
-        resolve(blob);
-        worker.terminate();
-      }
-    };
-
-    worker.onerror = (err) => {
-      console.error("Worker threw:", err);
-      reject(err.message || String(err));
-      worker.terminate();
-    };
-
-    worker.postMessage({
-      file: await file.arrayBuffer(),
-    });
-  });
 }
