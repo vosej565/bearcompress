@@ -1,35 +1,36 @@
-/* public/gs/worker.js */
-
 importScripts("/gs/gs.js");
 
 let ModuleReady = false;
 
-// Ghostscript 9.26은 자동으로 Module이 전역에 생성됨
 Module = {
-  noExitRuntime: true,
-  print: () => {},
-  printErr: () => {},
-
   onRuntimeInitialized() {
     ModuleReady = true;
-    console.log("Ghostscript runtime ready");
+    console.log("Ghostscript WASM ready");
   }
 };
 
 self.onmessage = async (e) => {
-  const fileBuffer = e.data.file;
-
-  if (!ModuleReady) {
-    console.log("WASM not ready yet, waiting...");
-    await waitForReady();
-  }
+  const input = new Uint8Array(e.data.file);
 
   try {
-    // PDF 저장
-    Module.FS.writeFile("input.pdf", new Uint8Array(fileBuffer));
+    // 준비 안됐으면 대기
+    if (!ModuleReady) {
+      await new Promise(r => {
+        const check = setInterval(() => {
+          if (ModuleReady) {
+            clearInterval(check);
+            r();
+          }
+        }, 10);
+      });
+    }
 
-    // Ghostscript 9.26은 callMain 없음 → _gs_main 직접 호출
+    // PDF 쓰기
+    Module.FS.writeFile("input.pdf", input);
+
+    // args 배열 작성
     const args = [
+      "gs",
       "-sDEVICE=pdfwrite",
       "-dCompatibilityLevel=1.4",
       "-dPDFSETTINGS=/ebook",
@@ -37,36 +38,22 @@ self.onmessage = async (e) => {
       "-dQUIET",
       "-dBATCH",
       "-sOutputFile=output.pdf",
-      "input.pdf",
+      "input.pdf"
     ];
 
-    Module.callMain(args); // ⛔ 9.26은 없기 때문에 아래로 대체해야 함
-    // 위 라인 제거하고 아래 원본 방식 사용 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
+    // gs_main 직접 호출 (MODULARIZE=0 환경)
     Module.ccall(
       "gs_main",
       "number",
-      ["number", "number", "number"],
-      [args.length, Module.allocateUTF8OnStack(args.join("\0")), 0]
+      ["number", "number"],
+      [args.length, Module.allocateUTF8OnStack(args.join("\0"))]
     );
 
     // 결과 읽기
     const output = Module.FS.readFile("output.pdf");
-
     self.postMessage({ result: output.buffer }, [output.buffer]);
 
   } catch (err) {
-    console.error(err);
     self.postMessage({ error: err.toString() });
   }
 };
-
-function waitForReady() {
-  return new Promise((resolve) => {
-    const check = () => {
-      if (ModuleReady) return resolve();
-      setTimeout(check, 10);
-    };
-    check();
-  });
-}
