@@ -1,4 +1,4 @@
-importScripts("/gs/gs-worker.js");
+importScripts("gs-worker.js");
 
 let ready = false;
 
