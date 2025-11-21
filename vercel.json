@@ -1,7 +1,21 @@
 {
+  "headers": [
+    {
+      "source": "/gs/(.*\\.wasm)",
+      "headers": [
+        { "key": "Content-Type", "value": "application/wasm" }
+      ]
+    },
+    {
+      "source": "/pdf-wasm/(.*\\.wasm)",
+      "headers": [
+        { "key": "Content-Type", "value": "application/wasm" }
+      ]
+    }
+  ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!gs/|pdf-wasm/).*)",
       "destination": "/index.html"
     }
   ]
