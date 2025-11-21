@@ -13,28 +13,30 @@ self.onmessage = async (e) => {
     return;
   }
 
-  const inputBytes = new Uint8Array(e.data.file);
-
   try {
-    // 입력 파일을 가상 FS에 저장
-    Module.FS.writeFile("input.pdf", inputBytes);
+    const input = new Uint8Array(e.data.file);
+
+    Module.FS.writeFile("input.pdf", input);
 
     const args = [
+      "-dSAFER",
       "-dBATCH",
       "-dNOPAUSE",
-      "-dSAFER",
       "-sDEVICE=pdfwrite",
-      "-dCompatibilityLevel=1.4",
       "-dPDFSETTINGS=/ebook",
-      "-sOutputFile=output.pdf",
+      "-sOutputFile=out.pdf",
       "input.pdf"
     ];
 
-    Module.callMain(args);
+    Module.ccall("gs_main", "number",
+      ["number", "number", "number"],
+      [args.length, Module.allocateUTF8OnStack(args.join("\0")), 0]
+    );
 
-    const output = Module.FS.readFile("output.pdf");
+    const output = Module.FS.readFile("out.pdf");
 
     postMessage({ result: output.buffer }, [output.buffer]);
+
   } catch (err) {
     postMessage({ error: err.toString() });
   }
