@@ -5,9 +5,7 @@ export async function _GSPS2PDF(
   statusUpdateCallback
 ) {
 
-  const worker = new Worker(
-    new URL('/gs/worker.js', import.meta.url)   // ← ★ 이거 하나만 바꾸면 됨
-  );
+   const worker = new Worker('/gs/worker.js');
 
   worker.postMessage({ data: dataStruct, target: 'wasm' });
 
