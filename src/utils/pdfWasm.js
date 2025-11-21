@@ -1,20 +1,23 @@
-export async function _GSPS2PDF(
-  dataStruct,
-  responseCallback,
-  progressCallback,
-  statusUpdateCallback
-) {
+export async function compressPdfInWasm(file) {
+  return new Promise(async (resolve, reject) => {
+    const worker = new Worker('/gs/worker.js');
 
-   const worker = new Worker('/gs/worker.js');
-
-  worker.postMessage({ data: dataStruct, target: 'wasm' });
-
-  return new Promise((resolve, reject) => {
-    const listener = (e) => {
-      resolve(e.data);
-      worker.removeEventListener('message', listener);
-      setTimeout(() => worker.terminate(), 0);
+    worker.onmessage = (e) => {
+      if (e.data.error) {
+        reject(e.data.error);
+      } else if (e.data.result) {
+        resolve(new Blob([e.data.result], { type: "application/pdf" }));
+      }
+      worker.terminate();
     };
-    worker.addEventListener('message', listener);
+
+    worker.onerror = (err) => {
+      reject(err.message);
+      worker.terminate();
+    };
+
+    worker.postMessage({
+      file: await file.arrayBuffer(),
+    });
   });
 }
