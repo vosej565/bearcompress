@@ -72,8 +72,12 @@ export async function compressPdfInWasm(file) {
     singleton.pendingResolve = resolve;
     singleton.pendingReject = reject;
 
-    singleton.worker.postMessage({
-      file: await file.arrayBuffer(),
-    });
-  });
+    
+  const buffer = await file.arrayBuffer();
+
+  singleton.worker.postMessage(
+    { file: buffer },
+    [buffer]   // ★ 핵심: 실제 ArrayBuffer를 그대로 전달
+  );
+});
 }
