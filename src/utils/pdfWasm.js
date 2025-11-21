@@ -3,7 +3,7 @@ export async function _GSPS2PDF( dataStruct,
                                    progressCallback,
                                    statusUpdateCallback){
   const worker = new Worker(
-    new URL('./background-worker.js', import.meta.url),
+    new URL('/gs/worker.js', import.meta.url),
     {type: 'module'}
   );
   worker.postMessage({ data: dataStruct, target: 'wasm'});

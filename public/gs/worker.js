@@ -1,5 +1,5 @@
 function loadScript() {
-  import("./gs-worker.js");
+  import("/gs/gs-worker.js");
 }
 
 var Module;
