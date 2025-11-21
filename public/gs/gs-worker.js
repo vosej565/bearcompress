@@ -701,11 +701,11 @@ function createExportWrapper(name) {
 
 // include: runtime_exceptions.js
 // end include: runtime_exceptions.js
-var wasmBinaryFile;
-  wasmBinaryFile = "https://cdn-wasm.b-cdn.net/gs-worker.wasm";
-  // if (!isDataURI(wasmBinaryFile)) {
-  //   wasmBinaryFile = locateFile(wasmBinaryFile);
-  // }
+var wasmBinaryFile = "gs-worker.wasm";
+
+if (!isDataURI(wasmBinaryFile)) {
+  wasmBinaryFile = locateFile(wasmBinaryFile);
+}
 
 function getBinarySync(file) {
   if (file == wasmBinaryFile && wasmBinary) {

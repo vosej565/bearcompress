@@ -28,13 +28,14 @@ self.onmessage = async (e) => {
       "input.pdf"
     ];
 
-    Module.ccall("gs_main", "number",
+    Module.ccall(
+      "gs_main",
+      "number",
       ["number", "number", "number"],
       [args.length, Module.allocateUTF8OnStack(args.join("\0")), 0]
     );
 
     const output = Module.FS.readFile("out.pdf");
-
     postMessage({ result: output.buffer }, [output.buffer]);
 
   } catch (err) {
