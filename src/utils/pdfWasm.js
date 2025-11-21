@@ -2,10 +2,8 @@ export async function _GSPS2PDF( dataStruct,
                                    responseCallback,
                                    progressCallback,
                                    statusUpdateCallback){
-  const worker = new Worker(
-    new URL('/gs/worker.js', import.meta.url),
-    {type: 'module'}
-  );
+  const worker = new Worker(new URL("/gs/worker.js", import.meta.url));
+
   worker.postMessage({ data: dataStruct, target: 'wasm'});
   return new Promise((resolve, reject)=>{
     const listener = (e) => {
