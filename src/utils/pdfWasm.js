@@ -1,33 +1,36 @@
-let worker = null;
-let ready = false;
+if (!window.__gsWasm) {
+  window.__gsWasm = {
+    worker: null,
+    ready: false,
+    pendingResolve: null,
+    pendingReject: null
+  };
+}
 
 export async function compressPdfInWasm(file) {
-  if (!worker) {
-    worker = new Worker("/gs/worker.js");
+  const singleton = window.__gsWasm;
 
-    worker.onmessage = (e) => {
-      if (e.data.ready) {
-        ready = true;
+  if (!singleton.worker) {
+    singleton.worker = new Worker("/gs/worker.js");
+    singleton.worker.onmessage = (e) => {
+      if (e.data.error) {
+        if (singleton.pendingReject) singleton.pendingReject(e.data.error);
+        return;
+      }
+
+      if (e.data.result && singleton.pendingResolve) {
+        const blob = new Blob([e.data.result], { type: "application/pdf" });
+        singleton.pendingResolve(blob);
       }
     };
-
-    // ready 신호 기다림
-    await new Promise((res) => {
-      const check = () =>
-        ready ? res() : setTimeout(check, 50);
-      check();
-    });
   }
 
   return new Promise(async (resolve, reject) => {
-    worker.onmessage = (e) => {
-      if (e.data.error) return reject(e.data.error);
-      if (e.data.result)
-        return resolve(new Blob([e.data.result], { type: "application/pdf" }));
-    };
+    singleton.pendingResolve = resolve;
+    singleton.pendingReject = reject;
 
-    worker.postMessage({
-      file: await file.arrayBuffer()
+    singleton.worker.postMessage({
+      file: await file.arrayBuffer(),
     });
   });
 }
