@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';  // useEffect도 import 해야 함
 import { Upload } from 'lucide-react';
 
 const SOCIAL_PRESETS = {
@@ -27,15 +27,6 @@ const SOCIAL_PRESETS = {
   ],
 };
 
- // useEffect 훅을 사용하여 preview 값이 변경될 때마다 미리보기 URL을 해제합니다.
-  useEffect(() => {
-    return () => {
-      if (preview) {
-        URL.revokeObjectURL(preview); // 미리보기 URL 해제
-      }
-    };
-  }, [preview]); // preview 상태가 변경될 때마다 실행
-
 const ImageResizer = ({ lang = 'en' }) => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -48,6 +39,15 @@ const ImageResizer = ({ lang = 'en' }) => {
   const [socialPresetIndex, setSocialPresetIndex] = useState(0);
 
   const originalRef = useRef({ w: 0, h: 0 });
+
+  // useEffect 훅을 ImageResizer 컴포넌트 내부에 추가
+  useEffect(() => {
+    return () => {
+      if (preview) {
+        URL.revokeObjectURL(preview); // 미리보기 URL 해제
+      }
+    };
+  }, [preview]); // preview 상태가 변경될 때마다 실행
 
   const handleFile = (file) => { 
     if (!file) return;
