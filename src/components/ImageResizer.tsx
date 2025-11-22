@@ -3,9 +3,6 @@ import { Upload } from "lucide-react";
 
 type SocialPlatform = "Facebook" | "Instagram" | "Twitter" | "YouTube";
 
-const [downloadFormat, setDownloadFormat] = useState<'image/jpeg' | 'image/png' | 'image/webp'>('image/jpeg');
-
-
 const SOCIAL_PRESETS = {
   Facebook: [
     { label: "Profile (170×170)", w: 170, h: 170 },
@@ -37,6 +34,7 @@ type ImageResizerProps = {
 };
 
 const ImageResizer: React.FC<ImageResizerProps> = ({ lang = "en" }) => {
+  const [downloadFormat, setDownloadFormat] = useState<'image/jpeg' | 'image/png' | 'image/webp'>('image/jpeg');
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -409,7 +407,7 @@ const ImageResizer: React.FC<ImageResizerProps> = ({ lang = "en" }) => {
 
   {/* Format Dropdown */}
   <select
-  className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white mb-4"
+  className="w-full border border-gray-300 rounded-xl px-3 py-3 bg-white mb-4"
   value={downloadFormat}
   onChange={(e) => setDownloadFormat(e.target.value as any)}
 >
@@ -422,9 +420,9 @@ const ImageResizer: React.FC<ImageResizerProps> = ({ lang = "en" }) => {
   {/* DOWNLOAD BUTTON */}
   <button
   onClick={() => resizeImage(downloadFormat)}
-  className="w-full px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
+  className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
 >
-  {lang === 'ko' ? '다운로드' : 'Download'}
+  {lang === "ko" ? "다운로드" : "Download"}
 </button>
 
 </div>
