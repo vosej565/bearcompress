@@ -63,6 +63,10 @@ function App() {
               <Route path="/convert/heic-to-jpg" element={<ConvertPage tool="heic-to-jpg" />} />
               <Route path="/convert/heic-to-png" element={<ConvertPage tool="heic-to-png" />} />
 
+              {/* Image Resizer */}
+              <Route path="/resize-image" element={<ImageResizer />} />
+              <Route path="/ko/resize-image" element={<ImageResizer />} />
+
               {/* Other */}
               <Route path="/legal" element={<Legal />} />
               <Route path="/contact" element={<Contact />} />
