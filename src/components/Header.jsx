@@ -131,8 +131,8 @@ const Header = () => {
           </nav>
         </div>
 
-        {/* Auth + Language dropdown moved to the far right */}
-        <div className="fixed top-0 right-0 z-50 flex items-center gap-4 mr-4">
+        {/* Auth + Language dropdown now centered */}
+        <div className="flex items-center gap-4 ml-auto mr-auto">
           <Auth /> {/* Auth 컴포넌트 */}
           <LanguageDropdown /> {/* 언어 선택 컴포넌트 */}
         </div>
