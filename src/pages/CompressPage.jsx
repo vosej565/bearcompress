@@ -172,4 +172,3 @@ const CompressPage = ({ tool = 'compress' }) => {
 };
 
 export default CompressPage;
-

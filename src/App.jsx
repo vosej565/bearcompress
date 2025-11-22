@@ -23,7 +23,8 @@ import KoConvertPage from '@/pages/ko/ConvertPage';
 import Legal from '@/components/Legal';
 import Contact from '@/components/Contact';
 
-import ImageResizer from '@/components/ImageResizer';
+import ResizeImagePage from "@/pages/ResizeImagePage";
+import KoResizeImagePage from "@/pages/ko/ResizeImagePage";
 
 
 // --------------------------------------------------
@@ -67,8 +68,8 @@ function App() {
               <Route path="/convert/heic-to-png" element={<ConvertPage tool="heic-to-png" />} />
 
               {/* Image Resizer */}
-              <Route path="/resize-image" element={<ImageResizer />} />
-              <Route path="/ko/resize-image" element={<ImageResizer />} />
+              <Route path="/resize-image" element={<ResizeImagePage />} />
+              <Route path="/ko/resize-image" element={<KoResizeImagePage />} />
 
               {/* Other */}
               <Route path="/legal" element={<Legal />} />
