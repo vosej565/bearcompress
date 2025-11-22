@@ -1,16 +1,18 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import ImageResizer from "@/components/ImageResizer";  // ImageResizer 컴포넌트 호출
+import ImageResizer from "../../components/ImageResizer"; // 상대 경로 수정
 
-const ResizeImagePage = () => {
-  const title = "Resize Image";
-  const description =
-    "Resize JPG, PNG, WebP, and HEIC images instantly online without losing quality.";
-  const keywords =
-    "resize image, image resizer, resize jpg, resize png, resize webp, resize heic, online image resizer, image tools";
-  const url = "https://bearcompress.com/resize-image";
-  const ogImage = "https://bearcompress.com/og-image.jpg";
+
+// 타입 정의: title, description, keywords, ogImage, url, 등
+const KoResizeImagePage: React.FC = () => {
+  const title: string = "이미지 크기 조정";
+  const description: string =
+    "JPG, PNG, WebP, HEIC 이미지를 온라인에서 빠르게 크기 조정하세요.";
+  const keywords: string =
+    "이미지 크기 조정, 이미지 리사이즈, jpg 리사이즈, png 리사이즈, webp 리사이즈, heic 리사이즈, 온라인 이미지 도구";
+  const url: string = "https://bearcompress.com/ko/resize-image";
+  const ogImage: string = "https://bearcompress.com/og-image.jpg";
 
   return (
     <>
@@ -50,6 +52,7 @@ const ResizeImagePage = () => {
             url: url,
             description: description,
             image: ogImage,
+            inLanguage: "ko",
           })}
         </script>
       </Helmet>
@@ -60,23 +63,23 @@ const ResizeImagePage = () => {
       {/* ---------------- Page Content ---------------- */}
       <div className="text-center mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
-          Resize Image
+          이미지 크기 조정
         </h1>
 
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Resize your JPG, PNG, WebP, and HEIC images instantly online.
-          Need to compress images instead?{" "}
-          <Link to="/compress" className="text-blue-600 underline">
-            Try our Image Compressor
+          JPG, PNG, WebP, HEIC 이미지를 온라인에서 빠르고 쉽게 리사이즈하세요.
+          이미지 압축이 필요하신가요?{" "}
+          <Link to="/ko/compress" className="text-blue-600 underline">
+            이미지 압축 도구 사용하기
           </Link>
           .
         </p>
       </div>
 
-      {/* ImageResizer에 lang="en" 추가 */}
-      <ImageResizer lang="en" /> {/* 여기에 언어별 props 전달 */}
+      {/* ImageResizer에 lang="ko" 추가 */}
+      <ImageResizer lang="ko" /> {/* 여기에 언어별 props 전달 */}
     </>
   );
 };
 
-export default ResizeImagePage;
+export default KoResizeImagePage;
