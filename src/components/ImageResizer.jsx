@@ -67,67 +67,75 @@ const ImageResizer = ({ lang = 'en' }) => {
     handleFile(e.dataTransfer.files[0] ?? null);
   };
 
-  const applySocialPreset = (platform, idx) => {
-    const preset = SOCIAL_PRESETS[platform]?.[idx];  // 안전한 접근
-    if (!preset) return;
-    setWidth(preset.w);
-    setHeight(preset.h);
-  };
+const applySocialPreset = (platform, idx) => {
+  // SOCIAL_PRESETS[platform]이 배열인지 확인 후 처리
+  const presets = SOCIAL_PRESETS[platform];
+  if (!Array.isArray(presets)) {
+    console.error(`Invalid platform: ${platform}`);
+    return;
+  }
+  const preset = presets[idx];  // 배열에서 안전하게 접근
+  if (!preset) return;
+  setWidth(preset.w);
+  setHeight(preset.h);
+};
 
-  const resizeImage = async (format = 'image/png') => {
-    if (!image || !preview) return;
+// resizeImage 함수에서 width와 height 값이 유효한 숫자인지 확인
+const resizeImage = async (format = 'image/png') => {
+  if (!image || !preview) return;
 
-    const img = new Image();
-    img.src = preview;
-    await img.decode();
+  const img = new Image();
+  img.src = preview;
+  await img.decode();
 
-    const canvas = document.createElement('canvas');
-    let targetW;
-    let targetH;
+  const canvas = document.createElement('canvas');
+  let targetW;
+  let targetH;
 
-    const origW = originalRef.current.w || img.width;
-    const origH = originalRef.current.h || img.height;
+  const origW = originalRef.current.w || img.width;
+  const origH = originalRef.current.h || img.height;
 
-    if (activeTab === 'percentage') {
-      targetW = Math.round(origW * (percent / 100));
-      targetH = Math.round(origH * (percent / 100));
-    } else {
-      const w = Number(width) || origW;  // 숫자로 변환하여 기본값을 사용
-      const h = Number(height) || origH; // 숫자로 변환하여 기본값을 사용
-      if (isNaN(w) || isNaN(h)) {
-        console.error("Invalid width or height value");
-        return;  // 유효하지 않으면 처리하지 않음
-      }
-      targetW = w;
-      targetH = h;
+  if (activeTab === 'percentage') {
+    targetW = Math.round(origW * (percent / 100));
+    targetH = Math.round(origH * (percent / 100));
+  } else {
+    const w = Number(width);
+    const h = Number(height);
+    if (isNaN(w) || isNaN(h)) {
+      console.error("Invalid width or height value");
+      return;  // 유효하지 않으면 처리하지 않음
     }
+    targetW = w;
+    targetH = h;
+  }
 
-    canvas.width = targetW;
-    canvas.height = targetH;
+  canvas.width = targetW;
+  canvas.height = targetH;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
 
-    ctx.drawImage(img, 0, 0, targetW, targetH);
+  ctx.drawImage(img, 0, 0, targetW, targetH);
 
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) return;
-        const link = document.createElement('a');
-        const ext =
-          format === 'image/png'
-            ? 'png'
-            : format === 'image/jpeg'
-            ? 'jpg'
-            : 'webp';
-        link.download = `resized.${ext}`;
-        link.href = URL.createObjectURL(blob);
-        link.click();
-      },
-      format,
-      0.95
-    );
-  };
+  canvas.toBlob(
+    (blob) => {
+      if (!blob) return;
+      const link = document.createElement('a');
+      const ext =
+        format === 'image/png'
+          ? 'png'
+          : format === 'image/jpeg'
+          ? 'jpg'
+          : 'webp';
+      link.download = `resized.${ext}`;
+      link.href = URL.createObjectURL(blob);
+      link.click();
+    },
+    format,
+    0.95
+  );
+};
+
 
   const renderTabs = () => {
     const base = 'px-4 py-2 text-sm font-medium rounded-lg transition-colors';
