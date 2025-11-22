@@ -40,7 +40,7 @@ const ImageResizer: React.FC<ImageResizerProps> = ({ lang = 'en' }) => {
   const [height, setHeight] = useState<number>(0); // 기본값으로 숫자 0을 사용
   const [keepRatio, setKeepRatio] = useState<boolean>(true); // 비율 유지 여부
   const [percent, setPercent] = useState<number>(100); // 비율 설정 기본값 100%
-  
+
   const [activeTab, setActiveTab] = useState<'size' | 'percentage' | 'social'>('size'); // 기본값 'size'
   const [socialPlatform, setSocialPlatform] = useState<SocialPlatform>('Facebook'); // 기본값 'Facebook'
   const [socialPresetIndex, setSocialPresetIndex] = useState<number>(0); // 기본 프리셋 인덱스 0
@@ -179,44 +179,43 @@ const ImageResizer: React.FC<ImageResizerProps> = ({ lang = 'en' }) => {
   };
 
   return (
-    <div>
-      {/* 업로드 영역 */}
-      {!preview && (
-        <div
-          onDrop={onDrop}
-          onDragOver={(e) => e.preventDefault()}
-          className="border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50
-                     px-6 py-16 flex flex-col items-center justify-center text-center"
-        >
-          <Upload className="h-12 w-12 text-gray-400 mb-4" />
-          <p className="text-xl font-semibold mb-2">
-            {lang === 'ko' ? '여기에 이미지를 끌어다 놓으세요' : 'Drop Images Here'}
-          </p>
-          <p className="text-gray-500 mb-4">{lang === 'ko' ? '또는' : 'or'}</p>
-
-          <label
-            className="inline-flex items-center justify-center px-8 py-3 rounded-xl
-                       bg-blue-600 text-white font-semibold cursor-pointer hover:bg-blue-700"
+    <div className="flex justify-center items-center">
+      {/* 왼쪽 영역 (이미지) */}
+      <div className="w-1/2">
+        {!preview && (
+          <div
+            onDrop={onDrop}
+            onDragOver={(e) => e.preventDefault()}
+            className="border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50
+                       px-6 py-16 flex flex-col items-center justify-center text-center"
           >
-            {lang === 'ko' ? '이미지 선택하기' : 'Select Images'}
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => handleFile(e.target.files?.[0] ?? null)}
-            />
-          </label>
+            <Upload className="h-12 w-12 text-gray-400 mb-4" />
+            <p className="text-xl font-semibold mb-2">
+              {lang === 'ko' ? '여기에 이미지를 끌어다 놓으세요' : 'Drop Images Here'}
+            </p>
+            <p className="text-gray-500 mb-4">{lang === 'ko' ? '또는' : 'or'}</p>
 
-          <p className="mt-4 text-xs text-gray-500">
-            {lang === 'ko' ? 'JPG, PNG, WebP, HEIC 지원' : 'Supports JPG, PNG, WebP, HEIC'}
-          </p>
-        </div>
-      )}
+            <label
+              className="inline-flex items-center justify-center px-8 py-3 rounded-xl
+                         bg-blue-600 text-white font-semibold cursor-pointer hover:bg-blue-700"
+            >
+              {lang === 'ko' ? '이미지 선택하기' : 'Select Images'}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => handleFile(e.target.files?.[0] ?? null)}
+              />
+            </label>
 
-      {/* 리사이즈 영역 */}
-      {preview && (
-        <div className="mt-10">
-          {/* 미리보기 */}
+            <p className="mt-4 text-xs text-gray-500">
+              {lang === 'ko' ? 'JPG, PNG, WebP, HEIC 지원' : 'Supports JPG, PNG, WebP, HEIC'}
+            </p>
+          </div>
+        )}
+
+        {/* 미리보기 영역 */}
+        {preview && (
           <div className="border border-gray-200 rounded-2xl p-4 mb-10 bg-gray-50 flex flex-col items-center">
             <img src={preview} className="max-h-80 rounded-md mb-4" alt="preview" />
             <p className="text-sm text-gray-600">
@@ -225,175 +224,168 @@ const ImageResizer: React.FC<ImageResizerProps> = ({ lang = 'en' }) => {
                 : `Original: ${originalRef.current.w} × ${originalRef.current.h} px`}
             </p>
           </div>
+        )}
+      </div>
 
-          <div className="max-w-2xl mx-auto">
-            {/* 탭 */}
-            {renderTabs()}
+      {/* 오른쪽 영역 (설정) */}
+      <div className="w-1/2 pl-12">
+        {/* 탭 및 크기 설정 */}
+        {renderTabs()}
 
-            {/* By Size 탭 */}
-            {activeTab === 'size' && (
-              <>
-                <div className="grid sm:grid-cols-2 gap-4 mb-4 text-left">
-                  <div>
-                    <label className="font-semibold text-sm mb-1 block">
-                      {lang === 'ko' ? '가로(px)' : 'Width'}
-                    </label>
-                    <input
-                      type="number"
-                      value={width}
-                      onChange={(e) => {
-                        const v = Number(e.target.value || 0);
-                        setWidth(v);
-                        if (keepRatio && originalRef.current.w) {
-                          setHeight(
-                            Math.round(
-                              (v / originalRef.current.w) *
-                                originalRef.current.h
-                            )
-                          );
-                        }
-                      }}
-                      className="w-full border border-gray-300 rounded-xl px-3 py-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="font-semibold text-sm mb-1 block">
-                      {lang === 'ko' ? '세로(px)' : 'Height'}
-                    </label>
-                    <input
-                      type="number"
-                      value={height}
-                      onChange={(e) => {
-                        const v = Number(e.target.value || 0);
-                        setHeight(v);
-                        if (keepRatio && originalRef.current.h) {
-                          setWidth(
-                            Math.round(
-                              (v / originalRef.current.h) *
-                                originalRef.current.w
-                            )
-                          );
-                        }
-                      }}
-                      className="w-full border border-gray-300 rounded-xl px-3 py-2"
-                    />
-                  </div>
-                </div>
-
-                <label className="flex items-center gap-2 text-sm mb-6">
-                  <input
-                    type="checkbox"
-                    checked={keepRatio}
-                    onChange={() => setKeepRatio(!keepRatio)}
-                  />
-                  {lang === 'ko' ? '비율 유지' : 'Keep aspect ratio'}
+        {/* Size 탭 */}
+        {activeTab === 'size' && (
+          <>
+            <div className="grid sm:grid-cols-2 gap-4 mb-4 text-left">
+              <div>
+                <label className="font-semibold text-sm mb-1 block">
+                  {lang === 'ko' ? '가로(px)' : 'Width'}
                 </label>
-              </>
-            )}
-
-            {/* As Percentage 탭 */}
-            {activeTab === 'percentage' && (
-              <div className="mb-8 text-left">
-                <p className="font-semibold text-sm mb-2">
-                  {lang === 'ko' ? '비율로 조절' : 'Resize by percentage'}
-                </p>
                 <input
-                  type="range"
-                  min={10}
-                  max={200}
-                  value={percent}
-                  onChange={(e) => setPercent(Number(e.target.value))}
-                  className="w-full"
+                  type="number"
+                  value={width}
+                  onChange={(e) => {
+                    const v = Number(e.target.value || 0);
+                    setWidth(v);
+                    if (keepRatio && originalRef.current.w) {
+                      setHeight(
+                        Math.round((v / originalRef.current.w) * originalRef.current.h)
+                      );
+                    }
+                  }}
+                  className="w-full border border-gray-300 rounded-xl px-3 py-2"
                 />
-                <div className="flex justify-between text-sm mt-1 text-gray-600">
-                  <span>
-                    {lang === 'ko' ? '이미지 크기' : 'Make my image'} {percent}%
-                  </span>
-                  <span>{percent}%</span>
-                </div>
               </div>
-            )}
 
-{/* Social Media 탭 */}
-{activeTab === 'social' && (
-  <div className="mb-8 text-left space-y-4">
-    <div>
-      <label className="block text-sm font-semibold mb-1">
-        {lang === 'ko' ? '플랫폼 선택' : 'Choose the Social Media Platform'}
-      </label>
-      <select
-        className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white"
-        value={socialPlatform}
-        onChange={(e) => {
-          const value = e.target.value as SocialPlatform;
-          setSocialPlatform(value);
-          setSocialPresetIndex(0); // reset preset index on platform change
-          applySocialPreset(value, 0); // apply preset for the selected platform
-        }}
-      >
-        {Object.keys(SOCIAL_PRESETS).map((platform) => (
-          <option key={platform} value={platform}>
-            {platform === 'Facebook' && (lang === 'ko' ? '페이스북' : 'Facebook')}
-            {platform === 'Instagram' && (lang === 'ko' ? '인스타그램' : 'Instagram')}
-            {platform === 'Twitter' && (lang === 'ko' ? '트위터' : 'Twitter')}
-            {platform === 'YouTube' && (lang === 'ko' ? '유튜브' : 'YouTube')}
-          </option>
-        ))}
-      </select>
-    </div>
+              <div>
+                <label className="font-semibold text-sm mb-1 block">
+                  {lang === 'ko' ? '세로(px)' : 'Height'}
+                </label>
+                <input
+                  type="number"
+                  value={height}
+                  onChange={(e) => {
+                    const v = Number(e.target.value || 0);
+                    setHeight(v);
+                    if (keepRatio && originalRef.current.h) {
+                      setWidth(
+                        Math.round((v / originalRef.current.h) * originalRef.current.w)
+                      );
+                    }
+                  }}
+                  className="w-full border border-gray-300 rounded-xl px-3 py-2"
+                />
+              </div>
+            </div>
 
-    <div>
-      <label className="block text-sm font-semibold mb-1">
-        {lang === 'ko' ? '프리셋 종류' : 'Preset Type'}
-      </label>
-      <select
-        className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white"
-        value={socialPresetIndex}
-        onChange={(e) => {
-          const idx = Number(e.target.value);
-          setSocialPresetIndex(idx);
-          applySocialPreset(socialPlatform, idx); // apply preset based on selected index
-        }}
-      >
-        {SOCIAL_PRESETS[socialPlatform].map((preset, idx) => (
-          <option key={preset.label} value={idx}>
-            {preset.label}
-          </option>
-        ))}
-      </select>
-    </div>
+            <label className="flex items-center gap-2 text-sm mb-6">
+              <input
+                type="checkbox"
+                checked={keepRatio}
+                onChange={() => setKeepRatio(!keepRatio)}
+              />
+              {lang === 'ko' ? '비율 유지' : 'Keep aspect ratio'}
+            </label>
+          </>
+        )}
 
-    <p className="text-sm text-gray-600">
-      {lang === 'ko' ? '선택된 크기' : 'Selected size'}: {width || '-'} × {height || '-'} px
-    </p>
-  </div>
-)}
-
-            {/* 공통 다운로드 버튼 */}
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <button
-                onClick={() => resizeImage('image/jpeg')}
-                className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
-              >
-                {lang === 'ko' ? 'JPG 다운로드' : 'Download JPG'}
-              </button>
-              <button
-                onClick={() => resizeImage('image/png')}
-                className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
-              >
-                {lang === 'ko' ? 'PNG 다운로드' : 'Download PNG'}
-              </button>
-              <button
-                onClick={() => resizeImage('image/webp')}
-                className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
-              >
-                {lang === 'ko' ? 'WebP 다운로드' : 'Download WebP'}
-              </button>
+        {/* Percentage 탭 */}
+        {activeTab === 'percentage' && (
+          <div className="mb-8 text-left">
+            <p className="font-semibold text-sm mb-2">
+              {lang === 'ko' ? '비율로 조절' : 'Resize by percentage'}
+            </p>
+            <input
+              type="range"
+              min={10}
+              max={200}
+              value={percent}
+              onChange={(e) => setPercent(Number(e.target.value))}
+              className="w-full"
+            />
+            <div className="flex justify-between text-sm mt-1 text-gray-600">
+              <span>{lang === 'ko' ? '이미지 크기' : 'Make my image'} {percent}%</span>
+              <span>{percent}%</span>
             </div>
           </div>
+        )}
+
+        {/* Social Media 탭 */}
+        {activeTab === 'social' && (
+          <div className="mb-8 text-left space-y-4">
+            <div>
+              <label className="block text-sm font-semibold mb-1">
+                {lang === 'ko' ? '플랫폼 선택' : 'Choose the Social Media Platform'}
+              </label>
+              <select
+                className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white"
+                value={socialPlatform}
+                onChange={(e) => {
+                  const value = e.target.value as SocialPlatform;
+                  setSocialPlatform(value);
+                  setSocialPresetIndex(0);
+                  applySocialPreset(value, 0);
+                }}
+              >
+                {Object.keys(SOCIAL_PRESETS).map((platform) => (
+                  <option key={platform} value={platform}>
+                    {platform === 'Facebook' && (lang === 'ko' ? '페이스북' : 'Facebook')}
+                    {platform === 'Instagram' && (lang === 'ko' ? '인스타그램' : 'Instagram')}
+                    {platform === 'Twitter' && (lang === 'ko' ? '트위터' : 'Twitter')}
+                    {platform === 'YouTube' && (lang === 'ko' ? '유튜브' : 'YouTube')}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold mb-1">
+                {lang === 'ko' ? '프리셋 종류' : 'Preset Type'}
+              </label>
+              <select
+                className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white"
+                value={socialPresetIndex}
+                onChange={(e) => {
+                  const idx = Number(e.target.value);
+                  setSocialPresetIndex(idx);
+                  applySocialPreset(socialPlatform, idx);
+                }}
+              >
+                {SOCIAL_PRESETS[socialPlatform].map((preset, idx) => (
+                  <option key={preset.label} value={idx}>
+                    {preset.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <p className="text-sm text-gray-600">
+              {lang === 'ko' ? '선택된 크기' : 'Selected size'}: {width || '-'} × {height || '-'} px
+            </p>
+          </div>
+        )}
+
+        {/* 공통 다운로드 버튼 */}
+        <div className="flex flex-wrap justify-center gap-4 mt-8">
+          <button
+            onClick={() => resizeImage('image/jpeg')}
+            className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
+          >
+            {lang === 'ko' ? 'JPG 다운로드' : 'Download JPG'}
+          </button>
+          <button
+            onClick={() => resizeImage('image/png')}
+            className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
+          >
+            {lang === 'ko' ? 'PNG 다운로드' : 'Download PNG'}
+          </button>
+          <button
+            onClick={() => resizeImage('image/webp')}
+            className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
+          >
+            {lang === 'ko' ? 'WebP 다운로드' : 'Download WebP'}
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 };
