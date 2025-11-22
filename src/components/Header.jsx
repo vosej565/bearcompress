@@ -19,7 +19,7 @@ const Header = () => {
     compress: { en: 'COMPRESS IMAGE', ko: '이미지 압축' },
     convert: { en: 'CONVERT IMAGE', ko: '이미지 변환' },
     more: { en: 'MORE', ko: '더보기' },
-    {/*pdf: { en: 'PDF Compressor', ko: 'PDF 압축' }*/}
+    /*pdf: { en: 'PDF Compressor', ko: 'PDF 압축' }*/
   };
 
   const currentLang = isKorean ? 'ko' : 'en';
