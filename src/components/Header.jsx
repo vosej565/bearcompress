@@ -32,7 +32,7 @@ const Header = () => {
             <img
               className="h-40 w-auto"
               alt="BearCompress Logo"
-              src="https://horizons-cdn.hostinger.com/e25b2aee-4883-48af-8ec0-56c5bdb0ffed/9ab12f7c8f77c9363a39b7321062c028.png"
+              src="/Logo.png"
             />
           </Link>
 
