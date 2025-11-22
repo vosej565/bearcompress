@@ -63,114 +63,92 @@ const ImageResizer = ({ lang = 'en' }) => {
     img.src = URL.createObjectURL(file);
   };
 
+  const onDrop = (e) => {
+    e.preventDefault();
+    handleFile(e.dataTransfer.files[0] ?? null);
+  };
 
+  const applySocialPreset = (platform, idx) => {
+    const preset = SOCIAL_PRESETS[platform]?.[idx];  // 안전하게 접근
+    if (!preset) return;
+    setWidth(preset.w);
+    setHeight(preset.h);
+  };
 
-const onDrop = (e) => {
-  e.preventDefault();
-  handleFile(e.dataTransfer.files[0] ?? null);
-};
+  const resizeImage = async (format = 'image/png') => {
+    if (!image || !preview) return;
 
-const applySocialPreset = (platform, idx) => {
-  const preset = SOCIAL_PRESETS[platform][idx];
-  if (!preset) return;
-  setWidth(preset.w);
-  setHeight(preset.h);
-};
+    const img = new Image();
+    img.src = preview;
+    await img.decode();
 
-const resizeImage = async (format = 'image/png') => {
-  if (!image || !preview) return;
+    const canvas = document.createElement('canvas');
+    let targetW;
+    let targetH;
 
-  const img = new Image();
-  img.src = preview;
-  await img.decode();
+    const origW = originalRef.current.w || img.width;
+    const origH = originalRef.current.h || img.height;
 
-  const canvas = document.createElement('canvas');
+    if (activeTab === 'percentage') {
+      targetW = Math.round(origW * (percent / 100));
+      targetH = Math.round(origH * (percent / 100));
+    } else {
+      // By size & Social media – width/height를 그대로 사용
+      const w = Number(width) || origW;  // Number로 변환하여 기본값을 사용
+      const h = Number(height) || origH; // Number로 변환하여 기본값을 사용
+      targetW = w;
+      targetH = h;
+    }
 
-  let targetW;
-  let targetH;
+    canvas.width = targetW;
+    canvas.height = targetH;
 
-  // Number로 변환하여 유효한 값인지 확인
-  const origW = originalRef.current.w || img.width;
-  const origH = originalRef.current.h || img.height;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-  if (activeTab === 'percentage') {
-    targetW = Math.round(origW * (percent / 100));
-    targetH = Math.round(origH * (percent / 100));
-  } else {
-    // By size & Social media – width/height를 그대로 사용
-    const w = Number(width) || origW;  // Number로 변환하여 기본값을 사용
-    const h = Number(height) || origH; // Number로 변환하여 기본값을 사용
-    targetW = w;
-    targetH = h;
-  }
+    ctx.drawImage(img, 0, 0, targetW, targetH);
 
-  canvas.width = targetW;
-  canvas.height = targetH;
-
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-
-  ctx.drawImage(img, 0, 0, targetW, targetH);
-
-  canvas.toBlob(
-    (blob) => {
-      if (!blob) return;
-      const link = document.createElement('a');
-      const ext =
-        format === 'image/png'
-          ? 'png'
-          : format === 'image/jpeg'
-          ? 'jpg'
-          : 'webp';
-      link.download = `resized.${ext}`;
-      link.href = URL.createObjectURL(blob);
-      link.click();
-    },
-    format,
-    0.95
-  );
-};
-
-
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) return;
+        const link = document.createElement('a');
+        const ext =
+          format === 'image/png'
+            ? 'png'
+            : format === 'image/jpeg'
+            ? 'jpg'
+            : 'webp';
+        link.download = `resized.${ext}`;
+        link.href = URL.createObjectURL(blob);
+        link.click();
+      },
+      format,
+      0.95
+    );
+  };
 
   const renderTabs = () => {
-    const base =
-      'px-4 py-2 text-sm font-medium rounded-lg transition-colors';
+    const base = 'px-4 py-2 text-sm font-medium rounded-lg transition-colors';
     return (
       <div className="inline-flex bg-gray-100 rounded-xl p-1 mb-6">
         <button
           type="button"
           onClick={() => setActiveTab('size')}
-          className={
-            base +
-            (activeTab === 'size'
-              ? ' bg-white shadow text-gray-900'
-              : ' text-gray-600 hover:text-gray-900')
-          }
+          className={base + (activeTab === 'size' ? ' bg-white shadow text-gray-900' : ' text-gray-600 hover:text-gray-900')}
         >
           {lang === 'ko' ? '크기 직접 입력' : 'By Size'}
         </button>
         <button
           type="button"
           onClick={() => setActiveTab('percentage')}
-          className={
-            base +
-            (activeTab === 'percentage'
-              ? ' bg-white shadow text-gray-900 ml-1'
-              : ' text-gray-600 hover:text-gray-900 ml-1')
-          }
+          className={base + (activeTab === 'percentage' ? ' bg-white shadow text-gray-900 ml-1' : ' text-gray-600 hover:text-gray-900 ml-1')}
         >
           {lang === 'ko' ? '비율로 조절' : 'As Percentage'}
         </button>
         <button
           type="button"
           onClick={() => setActiveTab('social')}
-          className={
-            base +
-            (activeTab === 'social'
-              ? ' bg-white shadow text-gray-900 ml-1'
-              : ' text-gray-600 hover:text-gray-900 ml-1')
-          }
+          className={base + (activeTab === 'social' ? ' bg-white shadow text-gray-900 ml-1' : ' text-gray-600 hover:text-gray-900 ml-1')}
         >
           {lang === 'ko' ? '소셜 미디어' : 'Social Media'}
         </button>
@@ -180,13 +158,11 @@ const resizeImage = async (format = 'image/png') => {
 
   return (
     <div>
-      {/* 업로드 영역 */}
       {!preview && (
         <div
           onDrop={onDrop}
           onDragOver={(e) => e.preventDefault()}
-          className="border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50
-                     px-6 py-16 flex flex-col items-center justify-center text-center"
+          className="border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50 px-6 py-16 flex flex-col items-center justify-center text-center"
         >
           <Upload className="h-12 w-12 text-gray-400 mb-4" />
           <p className="text-xl font-semibold mb-2">
@@ -195,8 +171,7 @@ const resizeImage = async (format = 'image/png') => {
           <p className="text-gray-500 mb-4">{lang === 'ko' ? '또는' : 'or'}</p>
 
           <label
-            className="inline-flex items-center justify-center px-8 py-3 rounded-xl
-                       bg-blue-600 text-white font-semibold cursor-pointer hover:bg-blue-700"
+            className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-blue-600 text-white font-semibold cursor-pointer hover:bg-blue-700"
           >
             {lang === 'ko' ? '이미지 선택하기' : 'Select Images'}
             <input
@@ -213,31 +188,23 @@ const resizeImage = async (format = 'image/png') => {
         </div>
       )}
 
-      {/* 리사이즈 영역 */}
       {preview && (
         <div className="mt-10">
-          {/* 미리보기 */}
           <div className="border border-gray-200 rounded-2xl p-4 mb-10 bg-gray-50 flex flex-col items-center">
             <img src={preview} className="max-h-80 rounded-md mb-4" alt="preview" />
             <p className="text-sm text-gray-600">
-              {lang === 'ko'
-                ? `원본: ${originalRef.current.w} × ${originalRef.current.h} px`
-                : `Original: ${originalRef.current.w} × ${originalRef.current.h} px`}
+              {lang === 'ko' ? `원본: ${originalRef.current.w} × ${originalRef.current.h} px` : `Original: ${originalRef.current.w} × ${originalRef.current.h} px`}
             </p>
           </div>
 
           <div className="max-w-2xl mx-auto">
-            {/* 탭 */}
             {renderTabs()}
 
-            {/* By Size 탭 */}
             {activeTab === 'size' && (
               <>
                 <div className="grid sm:grid-cols-2 gap-4 mb-4 text-left">
                   <div>
-                    <label className="font-semibold text-sm mb-1 block">
-                      {lang === 'ko' ? '가로(px)' : 'Width'}
-                    </label>
+                    <label className="font-semibold text-sm mb-1 block">{lang === 'ko' ? '가로(px)' : 'Width'}</label>
                     <input
                       type="number"
                       value={width}
@@ -245,12 +212,7 @@ const resizeImage = async (format = 'image/png') => {
                         const v = Number(e.target.value || 0);
                         setWidth(v);
                         if (keepRatio && originalRef.current.w) {
-                          setHeight(
-                            Math.round(
-                              (v / originalRef.current.w) *
-                                originalRef.current.h
-                            )
-                          );
+                          setHeight(Math.round((v / originalRef.current.w) * originalRef.current.h));
                         }
                       }}
                       className="w-full border border-gray-300 rounded-xl px-3 py-2"
@@ -258,9 +220,7 @@ const resizeImage = async (format = 'image/png') => {
                   </div>
 
                   <div>
-                    <label className="font-semibold text-sm mb-1 block">
-                      {lang === 'ko' ? '세로(px)' : 'Height'}
-                    </label>
+                    <label className="font-semibold text-sm mb-1 block">{lang === 'ko' ? '세로(px)' : 'Height'}</label>
                     <input
                       type="number"
                       value={height}
@@ -268,12 +228,7 @@ const resizeImage = async (format = 'image/png') => {
                         const v = Number(e.target.value || 0);
                         setHeight(v);
                         if (keepRatio && originalRef.current.h) {
-                          setWidth(
-                            Math.round(
-                              (v / originalRef.current.h) *
-                                originalRef.current.w
-                            )
-                          );
+                          setWidth(Math.round((v / originalRef.current.h) * originalRef.current.w));
                         }
                       }}
                       className="w-full border border-gray-300 rounded-xl px-3 py-2"
@@ -282,22 +237,15 @@ const resizeImage = async (format = 'image/png') => {
                 </div>
 
                 <label className="flex items-center gap-2 text-sm mb-6">
-                  <input
-                    type="checkbox"
-                    checked={keepRatio}
-                    onChange={() => setKeepRatio(!keepRatio)}
-                  />
+                  <input type="checkbox" checked={keepRatio} onChange={() => setKeepRatio(!keepRatio)} />
                   {lang === 'ko' ? '비율 유지' : 'Keep aspect ratio'}
                 </label>
               </>
             )}
 
-            {/* As Percentage 탭 */}
             {activeTab === 'percentage' && (
               <div className="mb-8 text-left">
-                <p className="font-semibold text-sm mb-2">
-                  {lang === 'ko' ? '비율로 조절' : 'Resize by percentage'}
-                </p>
+                <p className="font-semibold text-sm mb-2">{lang === 'ko' ? '비율로 조절' : 'Resize by percentage'}</p>
                 <input
                   type="range"
                   min={10}
@@ -307,71 +255,66 @@ const resizeImage = async (format = 'image/png') => {
                   className="w-full"
                 />
                 <div className="flex justify-between text-sm mt-1 text-gray-600">
-                  <span>
-                    {lang === 'ko' ? '이미지 크기' : 'Make my image'} {percent}%
-                  </span>
+                  <span>{lang === 'ko' ? '이미지 크기' : 'Make my image'} {percent}%</span>
                   <span>{percent}%</span>
                 </div>
               </div>
             )}
 
-{/* Social Media 탭 */}
-{activeTab === 'social' && (
-  <div className="mb-8 text-left space-y-4">
-    <div>
-      <label className="block text-sm font-semibold mb-1">
-        {lang === 'ko' ? '플랫폼 선택' : 'Choose the Social Media Platform'}
-      </label>
-      <select
-        className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white"
-        value={socialPlatform}
-        onChange={(e) => {
-          const value = e.target.value;  // 타입 assertion 없이 바로 사용
-          setSocialPlatform(value);
-          setSocialPresetIndex(0); // reset preset index on platform change
-          applySocialPreset(value, 0); // apply preset for the selected platform
-        }}
-      >
-        {Object.keys(SOCIAL_PRESETS).map((platform) => (
-          <option key={platform} value={platform}>
-            {platform === 'Facebook' && (lang === 'ko' ? '페이스북' : 'Facebook')}
-            {platform === 'Instagram' && (lang === 'ko' ? '인스타그램' : 'Instagram')}
-            {platform === 'Twitter' && (lang === 'ko' ? '트위터' : 'Twitter')}
-            {platform === 'YouTube' && (lang === 'ko' ? '유튜브' : 'YouTube')}
-          </option>
-        ))}
-      </select>
-    </div>
+            {activeTab === 'social' && (
+              <div className="mb-8 text-left space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-1">
+                    {lang === 'ko' ? '플랫폼 선택' : 'Choose the Social Media Platform'}
+                  </label>
+                  <select
+                    className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white"
+                    value={socialPlatform}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setSocialPlatform(value);
+                      setSocialPresetIndex(0); // reset preset index on platform change
+                      applySocialPreset(value, 0); // apply preset for the selected platform
+                    }}
+                  >
+                    {Object.keys(SOCIAL_PRESETS).map((platform) => (
+                      <option key={platform} value={platform}>
+                        {platform === 'Facebook' && (lang === 'ko' ? '페이스북' : 'Facebook')}
+                        {platform === 'Instagram' && (lang === 'ko' ? '인스타그램' : 'Instagram')}
+                        {platform === 'Twitter' && (lang === 'ko' ? '트위터' : 'Twitter')}
+                        {platform === 'YouTube' && (lang === 'ko' ? '유튜브' : 'YouTube')}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-    <div>
-      <label className="block text-sm font-semibold mb-1">
-        {lang === 'ko' ? '프리셋 종류' : 'Preset Type'}
-      </label>
-      <select
-        className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white"
-        value={socialPresetIndex}
-        onChange={(e) => {
-          const idx = Number(e.target.value);  // index를 숫자로 변환하여 사용
-          setSocialPresetIndex(idx);
-          applySocialPreset(socialPlatform, idx); // apply preset based on selected index
-        }}
-      >
-        {SOCIAL_PRESETS[socialPlatform].map((preset, idx) => (
-          <option key={preset.label} value={idx}>
-            {preset.label}
-          </option>
-        ))}
-      </select>
-    </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-1">
+                    {lang === 'ko' ? '프리셋 종류' : 'Preset Type'}
+                  </label>
+                  <select
+                    className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white"
+                    value={socialPresetIndex}
+                    onChange={(e) => {
+                      const idx = Number(e.target.value);
+                      setSocialPresetIndex(idx);
+                      applySocialPreset(socialPlatform, idx); // apply preset based on selected index
+                    }}
+                  >
+                    {SOCIAL_PRESETS[socialPlatform].map((preset, idx) => (
+                      <option key={preset.label} value={idx}>
+                        {preset.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-    <p className="text-sm text-gray-600">
-      {lang === 'ko' ? '선택된 크기' : 'Selected size'}: {width || '-'} × {height || '-'} px
-    </p>
-  </div>
-)}
+                <p className="text-sm text-gray-600">
+                  {lang === 'ko' ? '선택된 크기' : 'Selected size'}: {width || '-'} × {height || '-'} px
+                </p>
+              </div>
+            )}
 
-
-            {/* 공통 다운로드 버튼 */}
             <div className="flex flex-wrap justify-center gap-4 mt-8">
               <button
                 onClick={() => resizeImage('image/jpeg')}
