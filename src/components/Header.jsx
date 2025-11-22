@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
-import Auth from '@/components/Auth';  // Auth 컴포넌트 import
+import Auth from '@/components/Auth'; // Auth 컴포넌트 import
 import LanguageDropdown from '@/components/LanguageDropdown';
 import {
   DropdownMenu,
@@ -132,7 +132,7 @@ const Header = () => {
         </div>
 
         {/* Auth + Language dropdown moved to the far right */}
-        <div className="flex items-center gap-4 ml-auto">
+        <div className="fixed top-0 right-0 z-50 flex items-center gap-4 mr-4">
           <Auth /> {/* Auth 컴포넌트 */}
           <LanguageDropdown /> {/* 언어 선택 컴포넌트 */}
         </div>
