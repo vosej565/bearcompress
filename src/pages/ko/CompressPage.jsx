@@ -95,7 +95,7 @@ const toolDetails = {
     slug: '/ko/compress/heic'
   },
 
-  "compress-pdf": {
+  /*"compress-pdf": {
   title: "PDF 압축",
   description: "브라우저에서 직접 PDF 파일 용량을 안전하게 줄여보세요.",
   keywords: "pdf 압축, pdf 줄이기, pdf compressor",
@@ -107,7 +107,7 @@ const toolDetails = {
     </>
   ),
   slug: "/ko/compress/pdf",
-  },
+  },*/
 
 };
 

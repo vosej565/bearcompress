@@ -92,7 +92,7 @@ const toolDetails = {
     slug: '/compress/heic'
   },
 
-  'compress-pdf': {
+  /*'compress-pdf': {
   title: 'Compress PDF',
   description: 'Compress PDF files online using browser-based processing.',
   keywords: 'compress pdf, pdf compressor, reduce pdf size',
@@ -104,7 +104,7 @@ const toolDetails = {
     </>
   ),
   slug: '/compress/pdf'
-  },
+  },*/
 };
 
 
