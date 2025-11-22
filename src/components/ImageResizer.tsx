@@ -3,6 +3,9 @@ import { Upload } from "lucide-react";
 
 type SocialPlatform = "Facebook" | "Instagram" | "Twitter" | "YouTube";
 
+const [downloadFormat, setDownloadFormat] = useState<'image/jpeg' | 'image/png' | 'image/webp'>('image/jpeg');
+
+
 const SOCIAL_PRESETS = {
   Facebook: [
     { label: "Profile (170×170)", w: 170, h: 170 },
@@ -398,27 +401,34 @@ const ImageResizer: React.FC<ImageResizerProps> = ({ lang = "en" }) => {
           </div>
         )}
 
-        {/* DOWNLOAD DROPDOWN */}
-        <div className="mt-8 text-left">
-          <label className="block text-sm font-semibold mb-2">
-            {lang === "ko" ? "저장 형식" : "Download As"}
-          </label>
+        {/* Download Format Selector + Button */}
+<div className="mt-8 text-left">
+  <label className="block text-sm font-semibold mb-2">
+    {lang === 'ko' ? '저장 형식 선택' : 'Download As'}
+  </label>
 
-          <select
-            className="w-full border border-gray-300 rounded-xl px-3 py-3 bg-white mb-4"
-            onChange={(e) => {
-              const format = e.target.value;
-              if (format === "jpg") resizeImage("image/jpeg");
-              if (format === "png") resizeImage("image/png");
-              if (format === "webp") resizeImage("image/webp");
-            }}
-          >
-            <option value="">-- Select --</option>
-            <option value="jpg">JPG</option>
-            <option value="png">PNG</option>
-            <option value="webp">WEBP</option>
-          </select>
-        </div>
+  {/* Format Dropdown */}
+  <select
+  className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white mb-4"
+  value={downloadFormat}
+  onChange={(e) => setDownloadFormat(e.target.value as any)}
+>
+  <option value="image/jpeg">JPG</option>
+  <option value="image/png">PNG</option>
+  <option value="image/webp">WEBP</option>
+</select>
+
+
+  {/* DOWNLOAD BUTTON */}
+  <button
+  onClick={() => resizeImage(downloadFormat)}
+  className="w-full px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
+>
+  {lang === 'ko' ? '다운로드' : 'Download'}
+</button>
+
+</div>
+
       </div>
     </div>
   );
