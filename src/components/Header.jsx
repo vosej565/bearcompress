@@ -52,9 +52,9 @@ const Header = () => {
                 <DropdownMenuItem asChild><Link to={`${base}/compress/heic`}>HEIC Compressor</Link></DropdownMenuItem>
 
                 {/* PDF compressor */}
-                <DropdownMenuItem asChild>
+                {/*<DropdownMenuItem asChild>
                   <Link to={`${base}/compress/pdf`}>{navLinks.pdf[currentLang]}</Link>
-                </DropdownMenuItem>
+                </DropdownMenuItem>*/}
 
                 <DropdownMenuItem asChild><Link to={`${base}/convert/jpg-to-png`}>JPG to PNG</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={`${base}/convert/png-to-jpg`}>PNG to JPG</Link></DropdownMenuItem>
