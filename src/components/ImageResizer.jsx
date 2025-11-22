@@ -27,6 +27,15 @@ const SOCIAL_PRESETS = {
   ],
 };
 
+ // useEffect 훅을 사용하여 preview 값이 변경될 때마다 미리보기 URL을 해제합니다.
+  useEffect(() => {
+    return () => {
+      if (preview) {
+        URL.revokeObjectURL(preview); // 미리보기 URL 해제
+      }
+    };
+  }, [preview]); // preview 상태가 변경될 때마다 실행
+
 const ImageResizer = ({ lang = 'en' }) => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -40,18 +49,20 @@ const ImageResizer = ({ lang = 'en' }) => {
 
   const originalRef = useRef({ w: 0, h: 0 });
 
-  const handleFile = (file) => {  // 타입 주석 제거
-  if (!file) return;
-  const img = new Image();
-  img.onload = () => {
-    originalRef.current = { w: img.width, h: img.height };
-    setWidth(img.width);
-    setHeight(img.height);
-    setImage(file);
-    setPreview(URL.createObjectURL(file));
+  const handleFile = (file) => { 
+    if (!file) return;
+    const img = new Image();
+    img.onload = () => {
+      originalRef.current = { w: img.width, h: img.height };
+      setWidth(img.width);
+      setHeight(img.height);
+      setImage(file);
+      const previewUrl = URL.createObjectURL(file);
+      setPreview(previewUrl); // 미리보기 URL 설정
+    };
+    img.src = URL.createObjectURL(file);
   };
-  img.src = URL.createObjectURL(file);
-};
+
 
 
 const onDrop = (e) => {
@@ -78,6 +89,7 @@ const resizeImage = async (format = 'image/png') => {
   let targetW;
   let targetH;
 
+  // Number로 변환하여 유효한 값인지 확인
   const origW = originalRef.current.w || img.width;
   const origH = originalRef.current.h || img.height;
 
@@ -86,8 +98,8 @@ const resizeImage = async (format = 'image/png') => {
     targetH = Math.round(origH * (percent / 100));
   } else {
     // By size & Social media – width/height를 그대로 사용
-    const w = Number(width) || origW;
-    const h = Number(height) || origH;
+    const w = Number(width) || origW;  // Number로 변환하여 기본값을 사용
+    const h = Number(height) || origH; // Number로 변환하여 기본값을 사용
     targetW = w;
     targetH = h;
   }
@@ -118,6 +130,7 @@ const resizeImage = async (format = 'image/png') => {
     0.95
   );
 };
+
 
 
   const renderTabs = () => {
