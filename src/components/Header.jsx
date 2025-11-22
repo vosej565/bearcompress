@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
-import Auth from '@/components/Auth';
+import Auth from '@/components/Auth';  // Auth 컴포넌트 import
 import LanguageDropdown from '@/components/LanguageDropdown';
 import {
   DropdownMenu,
@@ -51,7 +51,6 @@ const Header = () => {
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center gap-6 text-lg font-medium">
-
             <NavLink to={`${base}/compress`}>
               {navLinks.compress[currentLang]}
             </NavLink>
@@ -60,7 +59,6 @@ const Header = () => {
               {navLinks.convert[currentLang]}
             </NavLink>
 
-            {/* ⭐ 추가된 IMAGE RESIZER 탭 */}
             <NavLink to={`${base}/resize-image`}>
               {navLinks.resize[currentLang]}
             </NavLink>
@@ -133,10 +131,10 @@ const Header = () => {
           </nav>
         </div>
 
-        {/* Auth + Language */}
+        {/* Auth + Language dropdown moved to the far right */}
         <div className="flex items-center gap-4 ml-auto">
-          <Auth />
-          <LanguageDropdown />
+          <Auth /> {/* Auth 컴포넌트 */}
+          <LanguageDropdown /> {/* 언어 선택 컴포넌트 */}
         </div>
       </div>
     </header>
