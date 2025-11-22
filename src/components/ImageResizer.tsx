@@ -380,13 +380,13 @@ const ImageResizer: React.FC<ImageResizerProps> = ({ lang = 'en' }) => {
               </button>
               <button
                 onClick={() => resizeImage('image/png')}
-                className="px-6 py-3 rounded-xl bg-gray-800 text-white font-semibold hover:bg-gray-900"
+                className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
               >
                 {lang === 'ko' ? 'PNG 다운로드' : 'Download PNG'}
               </button>
               <button
                 onClick={() => resizeImage('image/webp')}
-                className="px-6 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700"
+                className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
               >
                 {lang === 'ko' ? 'WebP 다운로드' : 'Download WebP'}
               </button>
