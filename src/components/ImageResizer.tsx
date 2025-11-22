@@ -419,11 +419,11 @@ const ImageResizer: React.FC<ImageResizerProps> = ({ lang = "en" }) => {
 
   {/* DOWNLOAD BUTTON */}
   <button
-  onClick={() => resizeImage(downloadFormat)}
-  className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700"
->
-  {lang === "ko" ? "다운로드" : "Download"}
-</button>
+    onClick={() => resizeImage(downloadFormat)}
+    className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700"
+  >
+    {lang === "ko" ? "다운로드" : "Download"}
+  </button>
 
 </div>
 
