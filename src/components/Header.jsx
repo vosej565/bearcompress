@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
-import Auth from '@/components/Auth';  // Auth 컴포넌트 import
+import Auth from '@/components/Auth';
 import LanguageDropdown from '@/components/LanguageDropdown';
 import {
   DropdownMenu,
@@ -38,18 +38,15 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white">
-      <div className="container mx-auto px-4 max-w-5xl flex h-20 items-center justify-between">
+      {/* max-w-5xl 삭제 → 화면 전체 사용됨 */}
+      <div className="w-full px-4 flex h-20 items-center justify-between">
+
+        {/* 왼쪽 로고 + 메뉴 */}
         <div className="flex items-center gap-8">
-          {/* Logo */}
           <Link to={base || '/'} className="flex items-center">
-            <img
-              className="h-40 w-auto"
-              alt="BearCompress Logo"
-              src="/Logo.png"
-            />
+            <img className="h-40 w-auto" src="/Logo.png" alt="BearCompress Logo" />
           </Link>
 
-          {/* Navigation */}
           <nav className="hidden md:flex items-center gap-6 text-lg font-medium">
             <NavLink to={`${base}/compress`}>
               {navLinks.compress[currentLang]}
@@ -63,15 +60,13 @@ const Header = () => {
               {navLinks.resize[currentLang]}
             </NavLink>
 
-            {/* MORE dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1">
-                {navLinks.more[currentLang]} 
+                {navLinks.more[currentLang]}
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
 
               <DropdownMenuContent>
-
                 <DropdownMenuItem asChild>
                   <Link to={`${base}/resize-image`}>
                     {dropdownLinks.imageResizer[currentLang]}
@@ -125,16 +120,15 @@ const Header = () => {
                     {dropdownLinks.heicToJpg[currentLang]}
                   </Link>
                 </DropdownMenuItem>
-
               </DropdownMenuContent>
             </DropdownMenu>
           </nav>
         </div>
 
-        {/* Auth + Language dropdown moved to the far right */}
+        {/* 오른쪽 끝으로 완전 붙음 */}
         <div className="flex items-center gap-4 ml-auto">
-          <Auth /> {/* Auth 컴포넌트 */}
-          <LanguageDropdown /> {/* 언어 선택 컴포넌트 */}
+          <Auth />
+          <LanguageDropdown />
         </div>
       </div>
     </header>
