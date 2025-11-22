@@ -23,6 +23,9 @@ import KoConvertPage from '@/pages/ko/ConvertPage';
 import Legal from '@/components/Legal';
 import Contact from '@/components/Contact';
 
+import ImageResizer from '@/components/ImageResizer';
+
+
 // --------------------------------------------------
 // APP (자동 언어 감지 없음 — 안정 버전)
 // --------------------------------------------------
