@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
-import Auth from '@/components/Auth'; // Auth 컴포넌트 import
+import Auth from '@/components/Auth';  // Auth 컴포넌트 import
 import LanguageDropdown from '@/components/LanguageDropdown';
 import {
   DropdownMenu,
