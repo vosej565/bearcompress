@@ -400,32 +400,32 @@ const ImageResizer: React.FC<ImageResizerProps> = ({ lang = "en" }) => {
         )}
 
         {/* Download Format Selector + Button */}
-<div className="mt-8 text-left">
-  <label className="block text-sm font-semibold mb-2">
-    {lang === 'ko' ? '저장 형식 선택' : 'Download As'}
-  </label>
+      <div className="mt-8">
+      <label className="block text-sm font-semibold mb-2">
+      {lang === 'ko' ? '저장 형식 선택' : 'Download As'}
+      </label>
 
-  {/* Format Dropdown */}
-  <select
-  className="w-full border border-gray-300 rounded-xl px-3 py-3 bg-white mb-4"
-  value={downloadFormat}
-  onChange={(e) => setDownloadFormat(e.target.value as any)}
->
-  <option value="image/jpeg">JPG</option>
-  <option value="image/png">PNG</option>
-  <option value="image/webp">WEBP</option>
-</select>
-
-
-  {/* DOWNLOAD BUTTON */}
-  <button
-    onClick={() => resizeImage(downloadFormat)}
-    className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700"
+        {/* Format Dropdown */}
+      <select
+      className="w-full border border-gray-300 rounded-xl px-3 py-3 bg-white mb-6"
+      value={downloadFormat}
+      onChange={(e) => setDownloadFormat(e.target.value as any)}
   >
-    {lang === "ko" ? "다운로드" : "Download"}
-  </button>
+      <option value="image/jpeg">JPG</option>
+      <option value="image/png">PNG</option>
+      <option value="image/webp">WEBP</option>
+      </select>
 
-</div>
+        {/* DOWNLOAD BUTTON CENTER */}
+      <div className="flex justify-center">
+      <button
+      onClick={() => resizeImage(downloadFormat)}
+      className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700"
+    >
+      {lang === "ko" ? "다운로드" : "Download"}
+      </button>
+      </div>
+      </div>
 
       </div>
     </div>
