@@ -150,6 +150,15 @@ const KoHomePage = () => {
         }
       },
       {
+  "@type": "Question",
+  "name": "이미지를 어떻게 리사이즈하나요?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "이미지를 리사이즈하려면, '이미지 리사이즈' 도구를 사용하여 파일을 업로드하세요. 이미지의 너비와 높이를 직접 입력하거나, 퍼센트 기반 리사이징을 사용할 수 있습니다. 원하는 크기로 조정한 후, 리사이즈 버튼을 클릭하면 변경된 이미지가 즉시 다운로드 준비가 됩니다."
+  }
+  },
+  
+      {
         "@type": "Question",
         "name": "BearCompress는 안전한가요?",
         "acceptedAnswer": {

@@ -142,6 +142,14 @@ const HomePage = () => {
                   "text": "Upload your HEIC image and choose JPG as the output format. Everything is done securely in your browser."
                 }
               },
+               {
+        "@type": "Question",
+        "name": "How do I resize an image?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To resize an image, simply upload your image file using our 'Resize Image' tool. You can adjust the image dimensions by entering specific width and height values, or use percentage-based resizing. Once you're satisfied, click the resize button to apply the changes, and the resized image will be ready for download instantly."
+        }
+      },
               {
                 "@type": "Question",
                 "name": "Is BearCompress safe?",
