@@ -52,6 +52,11 @@ const KoHomePage = () => {
     navigate('/ko/convert', { state: { initialFiles: pendingFiles } });
   };
 
+  const goToImageResizer = () => {
+  // 버튼 클릭 시 /resize-image로 이동
+  navigate('/ko/resize-image');
+};
+
   const resetFiles = () => setPendingFiles([]);
 
   return (
@@ -261,6 +266,16 @@ const KoHomePage = () => {
           >
             <Link to="/ko/convert">
               <Repeat className="mr-2 h-5 w-5" /> 이미지 변환
+            </Link>
+          </Button>
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className="text-lg h-14 px-8 w-full sm:w-auto rounded-xl"
+          >
+            <Link to="/ko/resize-image">
+              <Repeat className="mr-2 h-5 w-5" /> 이미지 리사이즈
             </Link>
           </Button>
         </div>
