@@ -182,7 +182,7 @@ const KoHomePage = () => {
 
       <section className="text-center py-16 md:py-24">
         <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
-          무료 온라인 이미지 압축 및 변환 도구
+          무료 온라인 이미지 압축, 변환 도구 및 리사이즈
         </h1>
         <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10">
           이미지 작업에 필요한 모든 도구를 한 곳에 모았습니다. 무료이며 빠르고 안전합니다.
