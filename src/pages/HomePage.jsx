@@ -52,6 +52,12 @@ const HomePage = () => {
     navigate('/convert', { state: { initialFiles: pendingFiles } });
   };
 
+  const goToImageResizer = () => {
+  // 버튼 클릭 시 /resize-image로 이동
+  navigate('/resize-image');
+};
+
+
   const resetFiles = () => setPendingFiles([]);
 
   return (
@@ -216,6 +222,13 @@ const HomePage = () => {
                 <Button onClick={goToConvert} variant="outline" className="px-6">
                   Convert Images
                 </Button>
+                {/* 추가된 Image Resizer 버튼 */}
+          <Button
+            onClick={goToImageResizer}
+            className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-xl h-14 px-8 w-full sm:w-auto"
+          >
+            Image Resizer
+          </Button>
               </div>
               <button
                 type="button"
