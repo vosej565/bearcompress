@@ -265,6 +265,18 @@ const HomePage = () => {
               <Repeat className="mr-2 h-5 w-5" /> Convert Image
             </Link>
           </Button>
+          
+            <Button
+              asChild
+            size="lg"
+            variant="outline"
+            className="text-lg h-14 px-8 w-full sm:w-auto rounded-xl"
+          >
+            <Link to="/resize-image">
+              <Repeat className="mr-2 h-5 w-5" /> Image Resizer
+            </Link>
+                </Button>
+
         </div>
       </section>
 
