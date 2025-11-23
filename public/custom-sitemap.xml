@@ -15,6 +15,8 @@
   <url><loc>https://bearcompress.com/convert/webp-to-jpg</loc></url>
   <url><loc>https://bearcompress.com/convert/heic-to-jpg</loc></url>
   <url><loc>https://bearcompress.com/convert/heic-to-png</loc></url>
+  <!-- Image Resizer -->
+  <url><loc>https://bearcompress.com/resize-image</loc></url>
   <!-- KOREAN -->
   <url><loc>https://bearcompress.com/ko</loc></url>
   <url><loc>https://bearcompress.com/ko/compress</loc></url>
@@ -30,4 +32,6 @@
   <url><loc>https://bearcompress.com/ko/convert/webp-to-jpg</loc></url>
   <url><loc>https://bearcompress.com/ko/convert/heic-to-jpg</loc></url>
   <url><loc>https://bearcompress.com/ko/convert/heic-to-png</loc></url>
+  <!-- Image Resizer Korean -->
+  <url><loc>https://bearcompress.com/ko/resize-image</loc></url>
 </urlset>
