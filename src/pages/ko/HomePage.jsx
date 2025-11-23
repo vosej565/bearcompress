@@ -326,6 +326,16 @@ const KoHomePage = () => {
             </p>
           </details>
           <details className="p-4 border rounded-lg bg-white shadow-sm">
+  <summary className="font-semibold text-lg cursor-pointer text-gray-700">
+    이미지를 어떻게 리사이즈하나요?
+  </summary>
+  <p className="mt-3 text-gray-600">
+    이미지를 리사이즈하려면, '이미지 리사이즈' 도구를 사용해 파일을 업로드하세요.
+    원하는 너비와 높이를 직접 입력하거나, 퍼센트 기반 리사이징을 사용할 수 있습니다. 
+    원하는 크기로 조정한 후, 리사이즈 버튼을 클릭하면 리사이즈된 이미지가 즉시 다운로드됩니다.
+  </p>
+</details>
+          <details className="p-4 border rounded-lg bg-white shadow-sm">
             <summary className="font-semibold text-lg cursor-pointer text-gray-700">
               이 무료 도구들은 사용하기에 안전한가요?
             </summary>

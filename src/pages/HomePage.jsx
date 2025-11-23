@@ -326,6 +326,17 @@ const HomePage = () => {
             </p>
           </details>
           <details className="p-4 border rounded-lg bg-white shadow-sm">
+  <summary className="font-semibold text-lg cursor-pointer text-gray-700">
+    How do I resize an image?
+  </summary>
+  <p className="mt-3 text-gray-600">
+    To resize an image, simply upload your image file using our 'Resize Image' tool.
+    You can adjust the image dimensions by entering specific width and height values, or
+    use percentage-based resizing. Once you're satisfied, click the resize button to 
+    apply the changes, and the resized image will be ready for download instantly.
+  </p>
+</details>
+          <details className="p-4 border rounded-lg bg-white shadow-sm">
             <summary className="font-semibold text-lg cursor-pointer text-gray-700">
               Is it safe to use these free tools?
             </summary>
