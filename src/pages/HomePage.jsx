@@ -233,7 +233,7 @@ const HomePage = () => {
                 {/* 추가된 Image Resizer 버튼 */}
           <Button
             onClick={goToImageResizer}
-            className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-xl h-14 px-8 w-full sm:w-auto"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6"
           >
             Image Resizer
           </Button>

@@ -241,6 +241,12 @@ const KoHomePage = () => {
                 <Button onClick={goToConvert} variant="outline" className="px-6">
                   이미지 변환하기
                 </Button>
+                <Button
+                            onClick={goToImageResizer}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-6"
+                          >
+                            이미지 리사이즈
+                          </Button>
               </div>
               <button
                 type="button"
