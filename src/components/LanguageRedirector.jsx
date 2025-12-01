@@ -7,29 +7,24 @@ const LanguageRedirector = () => {
   useEffect(() => {
     const path = location.pathname;
 
-    // 1) Hostinger PREVIEW 환경 감지 (HtmlLangUpdater랑 동일한 기준)
+    // 1) Hostinger preview 환경에서는 리다이렉트 금지
     const isPreview =
       window.location.hostname.includes("web-preview") ||
       window.location.hostname.includes("preview") ||
       window.location.href.includes("preview");
-
-    // 🔒 프리뷰 환경에서는 절대 리다이렉트 안 함 (깜빡임 방지)
     if (isPreview) return;
 
-    // 2) 사용자가 언어를 직접 선택한 경우 (override 우선)
+    // 2) 사용자가 언어를 직접 선택한 경우 (override)
     const override = localStorage.getItem("langOverride");
 
     if (override === "ko") {
-      // 한국어 고정: /ko 없는 경로는 전부 /ko로 보냄
       if (!path.startsWith("/ko")) {
-        const newPath = "/ko" + (path === "/" ? "" : path);
-        window.location.replace(newPath);
+        window.location.replace("/ko" + (path === "/" ? "" : path));
       }
       return;
     }
 
     if (override === "en") {
-      // 영어 고정: /ko로 시작하면 /에서 다시 시작
       if (path.startsWith("/ko")) {
         const stripped = path.replace(/^\/ko/, "") || "/";
         window.location.replace(stripped);
@@ -37,16 +32,19 @@ const LanguageRedirector = () => {
       return;
     }
 
-    // 3) override가 없는 경우에만 브라우저 언어 자동 감지
+    // 3) 자동 언어 감지 (override 없을 때만 실행)
     const userLang = navigator.language?.toLowerCase() || "en";
 
     if (userLang.includes("ko")) {
+      // 🔥 한국어: 경로 유지하면서 /ko 붙여서 이동
       if (!path.startsWith("/ko")) {
-        window.location.replace("/ko");
+        window.location.replace("/ko" + (path === "/" ? "" : path));
       }
     } else {
+      // 🔥 영어: /ko 있으면 제거
       if (path.startsWith("/ko")) {
-        window.location.replace("/");
+        const stripped = path.replace(/^\/ko/, "") || "/";
+        window.location.replace(stripped);
       }
     }
   }, [location.pathname]);
