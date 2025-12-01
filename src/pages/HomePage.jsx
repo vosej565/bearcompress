@@ -306,6 +306,7 @@ const HomePage = () => {
             linkText="Go to Converter"
           />
           <div className="md:col-span-2 flex justify-center">
+          <div className="w-full max-w-xl">
           <ToolCard
             icon={<Move className="h-8 w-8 text-blue-600" />}
             title="Resize Image"
@@ -313,6 +314,7 @@ const HomePage = () => {
             link="/resize-image"
             linkText="Go to Resizer"
           />
+          </div>
         </div>
         </div>
       </section>

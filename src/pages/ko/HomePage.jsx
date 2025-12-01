@@ -314,6 +314,7 @@ const KoHomePage = () => {
             linkText="변환기로 이동"
           />
           <div className="md:col-span-2 flex justify-center">
+            <div className="w-full max-w-xl">
           <ToolCard
             icon={<Move className="h-8 w-8 text-blue-600" />}
             title="이미지 리사이즈"
@@ -321,6 +322,7 @@ const KoHomePage = () => {
             link="/ko/resize-image"
             linkText="리사이즈 도구로 이동"
           />
+          </div>
         </div>
         </div>
       </section>
