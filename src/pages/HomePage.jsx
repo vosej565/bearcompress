@@ -171,10 +171,10 @@ const HomePage = () => {
 
       <section className="text-center py-16 md:py-24">
         <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
-          Free Online Image Compressor & Converter & Image Resizer
+          Free Online Image Compressor, Converter & Image Resizer
         </h1>
         <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10">
-          The ultimate image toolkit – compress, convert and Resize JPG, PNG, WebP, and HEIC in your browser.
+          The ultimate image toolkit – compress, convert and resize JPG, PNG, WebP, and HEIC in your browser.
         </p>
 
         {/* 통합 드롭존 */}

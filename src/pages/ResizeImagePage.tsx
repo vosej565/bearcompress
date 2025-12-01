@@ -6,7 +6,7 @@ import ImageResizer from "../components/ImageResizer";
 const ResizeImagePage = () => {
   const title = "Resize Image";
   const description =
-    "Resize JPG, PNG, WebP, and HEIC images instantly online without losing quality.";
+    "Resize JPG, PNG, WebP and HEIC images online for free — fast, secure and without losing quality.";
   const keywords =
     "resize image, image resizer, resize jpg, resize png, resize webp, resize heic, online image resizer, image tools";
   const url = "https://bearcompress.com/resize-image";
