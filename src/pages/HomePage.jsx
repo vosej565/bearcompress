@@ -89,7 +89,7 @@ const HomePage = () => {
         />
 		<meta property="og:type" content="website" />
         <meta property="og:url" content="https://bearcompress.com/" />
-        <meta property="og:image" content="https://bearcompress.com/og-image.jpg" />
+        <meta property="og:image" content="https://bearcompress.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
@@ -102,7 +102,7 @@ const HomePage = () => {
           name="twitter:description"
           content="Free and secure image tools to compress and convert images instantly."
         />
-        <meta name="twitter:image" content="https://bearcompress.com/og-image.jpg" />
+        <meta name="twitter:image" content="https://bearcompress.com/og-image.png" />
 
         <script type="application/ld+json">
           {`
@@ -164,7 +164,7 @@ const HomePage = () => {
       </Helmet>
 
 		 <img
-     	 src="/og-image.jpg"
+     	 src="/og-image.png"
      	 alt="BearCompress - Image Tools"
      	 className="hidden"
     	/>

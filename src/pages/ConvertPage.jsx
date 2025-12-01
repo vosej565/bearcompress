@@ -279,7 +279,7 @@ const ConvertPage = ({ tool = 'convert' }) => {
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
 
-        <meta property="og:image" content="https://bearcompress.com/og-image.jpg" />
+        <meta property="og:image" content="https://bearcompress.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
@@ -295,7 +295,7 @@ const ConvertPage = ({ tool = 'convert' }) => {
       </Helmet>
 
       <img
-        src="/og-image.jpg"
+        src="/og-image.png"
         alt={`${details.title} - BearCompress`}
         className="hidden"
       />

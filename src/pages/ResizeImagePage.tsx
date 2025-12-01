@@ -10,7 +10,7 @@ const ResizeImagePage = () => {
   const keywords =
     "resize image, image resizer, resize jpg, resize png, resize webp, resize heic, online image resizer, image tools";
   const url = "https://bearcompress.com/resize-image";
-  const ogImage = "https://bearcompress.com/og-image.jpg";
+  const ogImage = "https://bearcompress.com/og-image.png";
 
   return (
     <>
@@ -55,7 +55,7 @@ const ResizeImagePage = () => {
       </Helmet>
 
       {/* Hidden OG-image for crawlers */}
-      <img src="/og-image.jpg" className="hidden" alt="og" />
+      <img src="/og-image.png" className="hidden" alt="og" />
 
       {/* ---------------- Page Content ---------------- */}
       <div className="text-center mb-8">

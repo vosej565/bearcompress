@@ -212,7 +212,7 @@ const ExtraContent = ({ tool }) => {
 const CompressPage = ({ tool = 'compress' }) => {
   const details = toolDetails[tool];
   const pageUrl = `https://bearcompress.com${details.slug}`;
-  const ogImage = 'https://bearcompress.com/og-image.jpg';
+  const ogImage = 'https://bearcompress.com/og-image.png';
 
   const location = useLocation();
   const initialFiles = location.state?.initialFiles || null;

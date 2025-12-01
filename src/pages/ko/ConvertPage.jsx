@@ -253,7 +253,7 @@ const ExtraContent = ({ tool }) => {
 const KoConvertPage = ({ tool = 'convert' }) => {
   const details = toolDetails[tool];
   const pageUrl = `https://bearcompress.com${details.slug}`;
-  const ogImage = 'https://bearcompress.com/og-image.jpg';
+  const ogImage = 'https://bearcompress.com/og-image.png';
 
   const location = useLocation();
   const initialFiles = location.state?.initialFiles || null;
@@ -285,7 +285,7 @@ const KoConvertPage = ({ tool = 'convert' }) => {
       </Helmet>
 
       <img
-        src="/og-image.jpg"
+        src="/og-image.png"
         alt={`${details.title} - BearCompress`}
         className="hidden"
       />

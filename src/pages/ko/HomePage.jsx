@@ -90,7 +90,7 @@ const KoHomePage = () => {
   <meta property="og:url" content="https://bearcompress.com/ko" />
   <meta
     property="og:image"
-    content="https://bearcompress.com/og-image.jpg"
+    content="https://bearcompress.com/og-image.png"
   />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -107,7 +107,7 @@ const KoHomePage = () => {
   />
   <meta
     name="twitter:image"
-    content="https://bearcompress.com/og-image.jpg"
+    content="https://bearcompress.com/og-image.png"
   />
 
   {/* JSON-LD Schema */}
@@ -173,7 +173,7 @@ const KoHomePage = () => {
 </Helmet>
 
       <img
-        src="/og-image.jpg"
+        src="/og-image.png"
         alt="BearCompress - 무료 이미지 압축 및 변환 도구"
         className="hidden"
       />

@@ -10,7 +10,7 @@ const KoResizeImagePage = () => {
   const keywords =
     "이미지 크기 조정, 이미지 리사이즈, jpg 리사이즈, png 리사이즈, webp 리사이즈, heic 리사이즈, 온라인 이미지 도구";
   const url = "https://bearcompress.com/ko/resize-image";
-  const ogImage = "https://bearcompress.com/og-image.jpg";
+  const ogImage = "https://bearcompress.com/og-image.png";
 
   return (
     <>
@@ -56,7 +56,7 @@ const KoResizeImagePage = () => {
       </Helmet>
 
       {/* Hidden OG-image for crawlers */}
-      <img src="/og-image.jpg" className="hidden" alt="og" />
+      <img src="/og-image.png" className="hidden" alt="og" />
 
       {/* ---------------- Page Content ---------------- */}
       <div className="text-center mb-8">
