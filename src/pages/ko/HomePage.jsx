@@ -291,7 +291,7 @@ const KoHomePage = () => {
             className="text-lg h-14 px-8 w-full sm:w-auto rounded-xl"
           >
             <Link to="/ko/resize-image">
-              <Repeat className="mr-2 h-5 w-5" /> 이미지 리사이즈
+              <Move className="mr-2 h-5 w-5" /> 이미지 리사이즈
             </Link>
           </Button>
         </div>
@@ -313,6 +313,7 @@ const KoHomePage = () => {
             link="/ko/convert"
             linkText="변환기로 이동"
           />
+          <div className="md:col-span-2 flex justify-center">
           <ToolCard
             icon={<Move className="h-8 w-8 text-blue-600" />}
             title="이미지 리사이즈"
@@ -320,7 +321,7 @@ const KoHomePage = () => {
             link="/ko/resize-image"
             linkText="리사이즈 도구로 이동"
           />
-
+        </div>
         </div>
       </section>
 
