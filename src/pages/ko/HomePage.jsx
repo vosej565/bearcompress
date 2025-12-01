@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Image, Repeat, Upload } from 'lucide-react';
+import { ArrowRight, Image, Repeat, Upload, Move } from 'lucide-react';
 
 const KoHomePage = () => {
   const navigate = useNavigate();
@@ -62,15 +62,15 @@ const KoHomePage = () => {
   return (
     <>
       <Helmet>
-  <title>무료 온라인 이미지 압축 및 변환 도구 | BearCompress</title>
+  <title>무료 온라인 이미지 압축·변환·리사이즈 도구 | BearCompress</title>
 
   <meta
     name="description"
-    content="온라인에서 무료로 이미지를 압축하고 변환하는 최고의 도구. 브라우저에서 바로 JPG, PNG, WebP, HEIC 파일을 빠르고 안전하게 최적화하세요."
+    content="온라인에서 무료로 이미지를 압축, 변환, 리사이즈할 수 있는 최고의 도구. 브라우저에서 바로 JPG, PNG, WebP, HEIC 파일을 빠르고 안전하게 처리하세요."
   />
   <meta
     name="keywords"
-    content="이미지 압축, 이미지 변환, jpg 압축, png 압축, webp 압축, heic 변환, 온라인 이미지 도구, 사진 용량 줄이기"
+    content="이미지 압축, 이미지 변환, 이미지 리사이즈, 사진 크기 조절, 사진 리사이즈, jpg 압축, png 압축, webp 압축, heic 변환, 온라인 이미지 도구"
   />
   <meta name="robots" content="index, follow" />
 
@@ -81,11 +81,11 @@ const KoHomePage = () => {
   <meta property="og:type" content="website" />
   <meta
     property="og:title"
-    content="무료 온라인 이미지 압축 및 변환 도구 | BearCompress"
+    content="무료 온라인 이미지 압축·변환·리사이즈 도구 | BearCompress"
   />
   <meta
     property="og:description"
-    content="JPG, PNG, WebP, HEIC 이미지를 즉시 압축하고 변환하는 무료 보안 이미지 도구."
+    content="JPG, PNG, WebP, HEIC 이미지를 즉시 압축, 변환, 리사이즈할 수 있는 무료 보안 이미지 도구."
   />
   <meta property="og:url" content="https://bearcompress.com/ko" />
   <meta
@@ -99,11 +99,11 @@ const KoHomePage = () => {
   <meta name="twitter:card" content="summary_large_image" />
   <meta
     name="twitter:title"
-    content="무료 온라인 이미지 압축 및 변환 도구 | BearCompress"
+    content="무료 온라인 이미지 압축·변환·리사이즈 도구 | BearCompress"
   />
   <meta
     name="twitter:description"
-    content="이미지를 즉시 압축하고 변환하는 무료 보안 이미지 도구."
+    content="JPG, PNG, WebP, HEIC 이미지를 즉시 압축, 변환, 리사이즈할 수 있는 무료 보안 이미지 도구."
   />
   <meta
     name="twitter:image"
@@ -118,7 +118,7 @@ const KoHomePage = () => {
         "@type": "WebSite",
         "url": "https://bearcompress.com/ko",
         "name": "BearCompress",
-        "description": "JPG, PNG, WebP, HEIC용 무료 온라인 이미지 압축기 및 변환기.",
+        "description": "JPG, PNG, WebP, HEIC용 무료 온라인 이미지 압축기, 변환기 및 리사이즈 도구.",
         "potentialAction": {
           "@type": "SearchAction",
           "target": "https://bearcompress.com/search?q={search_term_string}",
@@ -245,6 +245,7 @@ const KoHomePage = () => {
                             onClick={goToImageResizer}
                             className="bg-blue-600 hover:bg-blue-700 text-white px-6"
                           >
+                            <Move className="mr-2 h-5 w-5" />
                             이미지 리사이즈
                           </Button>
               </div>
@@ -312,6 +313,14 @@ const KoHomePage = () => {
             link="/ko/convert"
             linkText="변환기로 이동"
           />
+          <ToolCard
+            icon={<Move className="h-8 w-8 text-blue-600" />}
+            title="이미지 리사이즈"
+            description="이미지의 너비와 높이를 직접 입력하거나 비율 기반으로 크기를 조절하세요. JPG, PNG, WebP, HEIC 모두 지원합니다."
+            link="/ko/resize-image"
+            linkText="리사이즈 도구로 이동"
+          />
+
         </div>
       </section>
 

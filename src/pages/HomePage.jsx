@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Image, Repeat, Upload } from 'lucide-react';
+import { ArrowRight, Image, Repeat, Upload, Move } from 'lucide-react';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -63,16 +63,16 @@ const HomePage = () => {
   return (
     <>
       <Helmet>
-				<title>Free Online Image Compressor & Converter | BearCompress</title>
+				<title>Free Online Image Compressor, Converter & Resizer | BearCompress</title>
 
         <meta
           name="description"
-          content="The ultimate online tools to compress and convert images for free. Optimize JPG, PNG, WebP, and HEIC files quickly and securely right in your browser."
+          content="The ultimate online tools to compress, resize, and convert images for free. Optimize JPG, PNG, WebP, and HEIC files quickly and securely right in your browser."
         />
 
         <meta
           name="keywords"
-          content="image compressor, image converter, compress jpg, compress png, webp compressor, heic converter, online image tools"
+          content="image compressor, image converter, image resizer, compress jpg, compress png, resize image, online image resizer, webp compressor, heic converter, online image tools"
         />
 
         <meta name="robots" content="index, follow" />
@@ -81,11 +81,11 @@ const HomePage = () => {
 
         <meta
           property="og:title"
-          content="Free Online Image Compressor & Converter | BearCompress"
+          content="Free Online Image Compressor, Converter & Resizer | BearCompress"
         />
         <meta
           property="og:description"
-          content="Free and secure image tools to compress and convert JPG, PNG, WebP, and HEIC images instantly."
+          content="Free and secure online tools to compress, resize, and convert JPG, PNG, WebP, and HEIC images instantly."
         />
 		<meta property="og:type" content="website" />
         <meta property="og:url" content="https://bearcompress.com/" />
@@ -96,11 +96,11 @@ const HomePage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="Free Online Image Compressor & Converter | BearCompress"
+          content="Free Online Image Compressor, Converter & Resizer | BearCompress"
         />
         <meta
           name="twitter:description"
-          content="Free and secure image tools to compress and convert images instantly."
+          content="Free and secure online tools to compress, resize, and convert JPG, PNG, WebP, and HEIC images instantly."
         />
         <meta name="twitter:image" content="https://bearcompress.com/og-image.png" />
 
@@ -111,7 +111,7 @@ const HomePage = () => {
         "@type": "WebSite",
         "url": "https://bearcompress.com/",
         "name": "BearCompress",
-        "description": "Free online image compressor and converter for JPG, PNG, WebP, and HEIC.",
+        "description": "Free online image compressor, resizer, and converter for JPG, PNG, WebP, and HEIC.",
         "potentialAction": {
           "@type": "SearchAction",
           "target": "https://bearcompress.com/search?q={search_term_string}",
@@ -235,6 +235,7 @@ const HomePage = () => {
             onClick={goToImageResizer}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6"
           >
+            <Move className="mr-2 h-5 w-5" />
             Image Resizer
           </Button>
               </div>
@@ -304,6 +305,14 @@ const HomePage = () => {
             link="/convert"
             linkText="Go to Converter"
           />
+          <ToolCard
+            icon={<Move className="h-8 w-8 text-blue-600" />}
+            title="Resize Image"
+            description="Resize JPG, PNG, WebP, and HEIC images by setting custom width and height or scaling by percentage."
+            link="/resize-image"
+            linkText="Go to Resizer"
+          />
+
         </div>
       </section>
 
