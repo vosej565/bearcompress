@@ -4,6 +4,9 @@ import { useLocation, Link } from 'react-router-dom';
 import CompressImages from '@/components/CompressImages';
 import CompressPdf from '../components/CompressPdf';
 
+/* ---------------------------
+   Tool Details
+----------------------------*/
 const toolDetails = {
   compress: {
     title: 'Compress Image',
@@ -97,7 +100,9 @@ const toolDetails = {
   },
 };
 
-// 포맷 이름
+/* ---------------------------
+   Label Mapping
+----------------------------*/
 const formatLabels = {
   compress: 'images',
   'compress-jpg': 'JPG/JPEG images',
@@ -107,7 +112,7 @@ const formatLabels = {
 };
 
 /* ---------------------------
-   Extra Content (기존 유지)
+   Extra Content
 ----------------------------*/
 const ExtraContent = ({ tool }) => {
   const label = formatLabels[tool] || 'images';
@@ -159,7 +164,56 @@ const ExtraContent = ({ tool }) => {
 };
 
 /* ---------------------------
-   추가할 TechnicalDeepSection
+   FAQ Section (복원됨)
+----------------------------*/
+const FAQSection = () => (
+  <section className="max-w-4xl mx-auto mt-16 text-left text-gray-800 space-y-10">
+
+    <div>
+      <h2 className="text-2xl font-semibold mb-4">Frequently Asked Questions (FAQ)</h2>
+
+      <div className="space-y-4">
+
+        <div>
+          <h3 className="font-semibold text-lg mb-1">Are my uploaded images stored on your server?</h3>
+          <p className="text-gray-700 leading-relaxed">
+            BearCompress runs directly in your browser whenever possible. Your images are not stored  
+            on any server once processing is complete.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="font-semibold text-lg mb-1">Does compression lower image quality?</h3>
+          <p className="text-gray-700 leading-relaxed">
+            Strong compression may affect quality, but our Balanced mode keeps images visually clear  
+            while greatly reducing file size.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="font-semibold text-lg mb-1">Is there a limit to how many files I can compress?</h3>
+          <p className="text-gray-700 leading-relaxed">
+            You can compress multiple files at once. Extremely large batches may depend on your  
+            device memory, so splitting them can be more stable.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="font-semibold text-lg mb-1">Which file formats are supported?</h3>
+          <p className="text-gray-700 leading-relaxed">
+            Supported formats: JPG, PNG, WebP, and HEIC.  
+            Need format conversion? Visit our Image Converter tool.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+);
+
+/* ---------------------------
+   Technical Section
 ----------------------------*/
 const TechnicalDeepSection = () => (
   <section className="max-w-4xl mx-auto mt-20 text-gray-800 space-y-10">
@@ -167,50 +221,51 @@ const TechnicalDeepSection = () => (
     <div>
       <h2 className="text-2xl font-semibold mb-3">Technical Breakdown of Image Compression</h2>
       <p className="leading-relaxed text-gray-700">
-        Image compression works by reducing redundant or non-essential visual information.
-        BearCompress performs all operations locally using Canvas 2D, ImageBitmap decoding,
-        and optimized encoding paths for each file type. Nothing is uploaded, ensuring complete privacy.
+        Image compression works by reducing redundant or non-essential visual data.
+        BearCompress performs everything locally using Canvas 2D, ImageBitmap decoding,
+        and optimized encoders for each format — ensuring full privacy.
       </p>
     </div>
 
     <div>
       <h3 className="text-xl font-semibold mb-2">JPEG Compression (DCT-Based)</h3>
       <p className="text-gray-700">
-        JPEG divides images into 8×8 blocks and applies a Discrete Cosine Transform (DCT).
-        High-frequency data is reduced through quantization, while Huffman coding compresses repetitive patterns.
+        JPEG divides images into 8×8 blocks, applies the Discrete Cosine Transform, then quantizes  
+        and Huffman-encodes them to reduce file size efficiently.
       </p>
     </div>
 
     <div>
       <h3 className="text-xl font-semibold mb-2">PNG Compression (Lossless)</h3>
       <p className="text-gray-700">
-        PNG uses DEFLATE, a combination of LZ77 and Huffman coding. Scanline filters reduce differences
-        between pixels to improve compression efficiency.
+        PNG uses DEFLATE compression with LZ77 and Huffman coding. Scanline filtering increases  
+        compression efficiency without losing quality.
       </p>
     </div>
 
     <div>
       <h3 className="text-xl font-semibold mb-2">WebP Compression</h3>
       <p className="text-gray-700">
-        WebP lossy uses VP8-style prediction, while lossless WebP uses local color transforms and dictionary coding.
+        WebP lossy uses VP8 prediction, while WebP lossless uses color transforms and  
+        dictionary-based entropy coding.
       </p>
     </div>
 
     <div>
       <h3 className="text-xl font-semibold mb-2">HEIC (HEVC-Based)</h3>
       <p className="text-gray-700">
-        HEIC relies on HEVC intra-frame compression including directional prediction, quad-tree partitioning,
-        and CABAC entropy coding. BearCompress decodes HEIC in-browser before recompressing.
+        HEIC relies on HEVC intra-frame compression including prediction, quad-tree partitioning,  
+        and CABAC entropy coding. BearCompress decodes HEIC locally before recompressing.
       </p>
     </div>
 
     <div>
       <h2 className="text-2xl font-semibold mb-3">Local Browser Processing</h2>
       <ul className="list-disc list-inside text-gray-700 space-y-1">
-        <li>Canvas 2D for bitmap manipulation</li>
-        <li>ImageBitmap for efficient decoding</li>
-        <li>Blob/File API for generating downloadable output</li>
-        <li>OffscreenCanvas (when available) for smoother performance</li>
+        <li>Canvas 2D for pixel-level operations</li>
+        <li>ImageBitmap for fast decoding</li>
+        <li>Blob/File API for file creation</li>
+        <li>OffscreenCanvas (if supported) for performance</li>
       </ul>
     </div>
 
@@ -218,7 +273,7 @@ const TechnicalDeepSection = () => (
 );
 
 /* ---------------------------
-   CompressPage (최종)
+   CompressPage (최종 완성본)
 ----------------------------*/
 const CompressPage = ({ tool = 'compress' }) => {
   const details = toolDetails[tool];
@@ -281,6 +336,7 @@ const CompressPage = ({ tool = 'compress' }) => {
       {tool !== 'compress-pdf' && (
         <>
           <ExtraContent tool={tool} />
+          <FAQSection />
           <TechnicalDeepSection />
         </>
       )}

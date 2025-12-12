@@ -259,49 +259,54 @@ const ExtraContent = ({ tool }) => {
 =================================== */
 const TechnicalDeepSection = () => (
   <section className="max-w-4xl mx-auto mt-20 text-gray-800 space-y-10">
+    
     <div>
-      <h2 className="text-2xl font-semibold mb-3">이미지 변환 알고리즘 기술 설명</h2>
+      <h2 className="text-2xl font-semibold mb-3">Technical Overview of Image Conversion Algorithms</h2>
       <p className="leading-relaxed text-gray-700">
-        이미지 형식 변환은 기본적으로 기존 이미지를 다른 포맷으로 변환하는 과정입니다. JPG, PNG, WebP,
-        HEIC 등 각 이미지 포맷은 고유한 압축 방식과 장단점을 가지고 있습니다. BearCompress는 각 포맷의
-        특성에 맞는 변환을 제공하여 최적의 품질을 유지하면서도 빠른 변환을 지원합니다.
+        Image format conversion involves transforming an existing image into another format.  
+        Formats such as JPG, PNG, WebP, and HEIC each have their own unique compression methods,  
+        characteristics, and strengths. BearCompress optimizes the conversion pipeline for each  
+        format to deliver fast performance while preserving the best possible visual quality.
       </p>
     </div>
 
     <div>
       <h3 className="text-xl font-semibold mb-2">JPG → PNG</h3>
       <p className="text-gray-700 leading-relaxed">
-        JPG에서 PNG로 변환 시, 손실 압축을 피하고 투명도를 지원할 수 있는 PNG 포맷으로 바꿀 수 있습니다.
-        PNG는 무손실 압축을 지원하여, 파일 용량은 커지지만 디테일을 그대로 유지할 수 있습니다.
+        Converting JPG to PNG removes lossy compression artifacts and allows support for transparency.  
+        PNG uses lossless compression, which preserves fine details but may increase file size compared to JPG.
       </p>
     </div>
 
     <div>
       <h3 className="text-xl font-semibold mb-2">PNG → JPG</h3>
       <p className="text-gray-700 leading-relaxed">
-        PNG를 JPG로 변환하면 압축률이 증가하지만, 투명도는 손실되며 일부 디테일이 사라질 수 있습니다. 
-        이는 JPG의 손실 압축 방식 때문입니다.
+        PNG to JPG conversion reduces file size by applying lossy compression.  
+        However, transparency information is lost, and some minor detail reduction can occur  
+        due to JPG’s compression method.
       </p>
     </div>
 
     <div>
       <h3 className="text-xl font-semibold mb-2">PNG → WebP</h3>
       <p className="text-gray-700 leading-relaxed">
-        WebP는 PNG보다 더 나은 압축 효율을 자랑하며, 투명도도 지원합니다. 또한, WebP는 웹에서 로딩 속도를
-        개선할 수 있어 웹 사이트 최적화에 유리합니다.
+        WebP provides significantly better compression compared to PNG while still supporting transparency.  
+        This makes WebP ideal for websites aiming to improve loading speed and bandwidth efficiency.
       </p>
     </div>
 
     <div>
       <h3 className="text-xl font-semibold mb-2">HEIC → JPG</h3>
       <p className="text-gray-700 leading-relaxed">
-        HEIC 파일은 최신 iPhone에서 생성되는 포맷으로, HEVC 압축을 사용하여 더 작은 파일 크기를 자랑합니다.
-        JPG로 변환하면 호환성이 높아지지만, 일부 압축 손실이 있을 수 있습니다.
+        HEIC, commonly used by modern iPhones, relies on HEVC compression to achieve smaller file sizes.  
+        Converting HEIC to JPG improves compatibility across devices and platforms,  
+        though some quality loss may occur depending on the JPG compression settings.
       </p>
     </div>
 
   </section>
 );
+
 
 const ConvertPage = ({ tool = 'convert' }) => {
   const details = toolDetails[tool];
