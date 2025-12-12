@@ -120,6 +120,12 @@ const Header = () => {
                     {dropdownLinks.heicToJpg[currentLang]}
                   </Link>
                 </DropdownMenuItem>
+
+                <DropdownMenuItem asChild>
+                  <Link to={`${base}/convert/heic-to-png`}>
+                    {dropdownLinks.heicToJpg[currentLang]}
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </nav>

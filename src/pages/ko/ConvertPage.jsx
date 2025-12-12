@@ -116,6 +116,24 @@ const toolDetails = {
     ),
     slug: '/ko/convert/heic-to-jpg',
   },
+
+  'heic-to-png': {
+  title: 'HEIC를 PNG로 변환',
+  description: 'HEIC 이미지를 PNG 형식으로 고품질 변환하세요.',
+  keywords: 'heic png 변환, heic를 png로, heic 변환기, 아이폰 heic png',
+  h1: 'HEIC를 PNG로 변환기',
+  p: (
+    <>
+      HEIC 이미지를 고품질 PNG 형식으로 즉시 변환하세요.
+      변환 후 PNG 용량 줄이기가 필요하다면{' '}
+      <Link to="/ko/compress/png" className="text-blue-600 underline">
+        PNG 압축 도구
+      </Link>
+      를 사용해보세요.
+    </>
+  ),
+  slug: '/ko/convert/heic-to-png',
+},
 };
 
 /* ----------------------------------
@@ -128,6 +146,7 @@ const conversionLabels = {
   'png-to-webp': 'PNG를 WebP로',
   'webp-to-jpg': 'WebP를 JPG로',
   'heic-to-jpg': 'HEIC를 JPG로',
+  'heic-to-png': 'HEIC를 PNG로',
 };
 
 const ExtraContent = ({ tool }) => {
