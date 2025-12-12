@@ -32,6 +32,7 @@ const Header = () => {
     pngToJpg: { en: 'PNG to JPG', ko: 'PNG → JPG' },
     webpToJpg: { en: 'WebP to JPG', ko: 'WebP → JPG' },
     heicToJpg: { en: 'HEIC to JPG', ko: 'HEIC → JPG' },
+    heicToPng: { en: 'HEIC to PNG', ko: 'HEIC → PNG' },
   };
 
   const currentLang = isKorean ? 'ko' : 'en';
@@ -123,7 +124,7 @@ const Header = () => {
 
                 <DropdownMenuItem asChild>
                   <Link to={`${base}/convert/heic-to-png`}>
-                    {dropdownLinks.heicToJpg[currentLang]}
+                    {dropdownLinks.heicToPng[currentLang]}
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
