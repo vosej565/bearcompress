@@ -94,11 +94,9 @@ const toolDetails = {
     ),
     slug: '/ko/compress/heic',
   },
-
-  /* 'compress-pdf': { ... } */
 };
 
-// 포맷 이름(문장에 넣어서 쓸 label) – 타입 없이 그냥 객체
+// 포맷 이름(문장에 넣어서 쓸 label)
 const formatLabels = {
   compress: '이미지',
   'compress-jpg': 'JPG/JPEG 이미지',
@@ -143,7 +141,7 @@ const ExtraContent = ({ tool }) => {
         </h2>
         <ol className="list-decimal list-inside space-y-2 text-gray-700">
           <li>
-            상단 도구에서 <span className="font-semibold">“이미지 선택”</span>을 클릭하거나,
+            상단 도구에서 <span className="font-semibold">이미지 선택</span>을 클릭하거나,
             파일을 영역 안으로 끌어다 놓습니다.
           </li>
           <li>원하는 압축 강도(균형, 고화질, 더 작은 파일)를 선택합니다.</li>
@@ -156,7 +154,7 @@ const ExtraContent = ({ tool }) => {
       <div>
         <h2 className="text-2xl font-semibold mb-3">더 좋은 결과를 위한 팁</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>처음에는 기본값인 “균형(Balanced)”으로 테스트해 보고, 더 줄이고 싶을 때만 강한 압축을 사용하세요.</li>
+          <li>처음에는 기본값인 균형(Balanced)으로 테스트해 보고, 더 줄이고 싶을 때만 강한 압축을 사용하세요.</li>
           <li>디테일이 많은 사진(풍경, 인물 등)은 화질을 조금 더 높게 유지하는 것이 좋습니다.</li>
           <li>썸네일이나 아이콘처럼 작은 이미지는 강한 압축을 사용해도 티가 잘 나지 않습니다.</li>
           <li>중요한 원본 이미지는 별도로 보관해 두면 나중에 다시 다른 설정으로 압축하기 편합니다.</li>
@@ -204,6 +202,79 @@ const ExtraContent = ({ tool }) => {
     </section>
   );
 };
+
+/* ===================================
+   기술 설명 섹션 (TechnicalDeepSection)
+=================================== */
+const TechnicalDeepSection = () => (
+  <section className="max-w-4xl mx-auto mt-20 text-gray-800 space-y-10">
+    <div>
+      <h2 className="text-2xl font-semibold mb-3">이미지 압축 알고리즘 기술 설명</h2>
+      <p className="leading-relaxed text-gray-700">
+        대부분의 현대 이미지 압축은 사람의 눈이 잘 구분하지 못하는 정보를 줄이거나, 같은 패턴이
+        반복되는 부분을 더 짧게 표현하는 방식으로 용량을 줄입니다. BearCompress는 브라우저 안에서
+        이미지를 디코딩하고(Canvas 2D, ImageBitmap 등), 픽셀 데이터를 다시 인코딩하는 과정을 통해
+        각 형식(JPEG, PNG, WebP, HEIC)에 맞는 방식으로 최적화합니다.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-2">JPEG 압축 (DCT 기반)</h3>
+      <p className="text-gray-700 leading-relaxed">
+        JPEG는 이미지를 8×8 블록으로 나눈 뒤, 각 블록을 이산 코사인 변환(DCT)으로 주파수 성분으로 바꿉니다.
+        사람의 눈이 덜 민감한 고주파 성분(미세한 디테일)은 더 많이 줄이고, 저주파 성분(큰 형태, 밝기 정보)은
+        상대적으로 보존하는 방식으로 양자화를 진행합니다. 이후 허프만 코딩을 이용해 반복되는 패턴을
+        효율적으로 표현해 용량을 줄입니다.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-2">PNG 압축 (무손실 DEFLATE)</h3>
+      <p className="text-gray-700 leading-relaxed">
+        PNG는 화질 손실 없이 압축하는 무손실 포맷입니다. 각 줄의 픽셀 데이터를 필터링하여 인접한 픽셀과의
+        차이를 줄인 뒤, LZ77과 허프만 코딩을 결합한 DEFLATE 알고리즘으로 압축합니다. 이렇게 하면 동일하거나
+        비슷한 패턴이 많은 이미지에서 높은 압축 효율을 얻을 수 있습니다. 투명도(알파 채널)도 그대로 보존됩니다.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-2">WebP 압축</h3>
+      <p className="text-gray-700 leading-relaxed">
+        WebP는 손실/무손실을 모두 지원하는 포맷입니다. 손실 WebP는 비디오 코덱과 비슷한 방식으로 블록 단위
+        예측과 변환, 양자화를 사용하고, 무손실 WebP는 색상 변환, 지역 팔레트, 사전 기반 압축 등을 활용해
+        용량을 줄입니다. 같은 화질 기준으로 JPG보다 용량이 더 작아지는 경우가 많습니다.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-2">HEIC 압축 (HEVC 기반)</h3>
+      <p className="text-gray-700 leading-relaxed">
+        HEIC는 HEVC(H.265) 인트라 프레임 압축 방식을 사용하여, JPEG보다 훨씬 높은 압축 효율을 제공합니다.
+        이미지가 여러 단위 블록으로 쪼개지고, 방향성 예측, 변환, 엔트로피 코딩(CABAC) 등을 거치면서
+        용량이 줄어듭니다. BearCompress는 브라우저에서 HEIC를 디코딩한 뒤, 다시 다른 형식으로 변환하거나
+        재압축할 수 있도록 처리합니다.
+      </p>
+    </div>
+
+    <div>
+      <h2 className="text-2xl font-semibold mb-3">브라우저 내에서 이뤄지는 처리 과정</h2>
+      <p className="text-gray-700 leading-relaxed">
+        BearCompress는 가능한 한 모든 처리를 사용자의 브라우저 안에서 수행하도록 설계되어 있습니다.
+        이를 위해 다음과 같은 웹 기술을 활용합니다.
+      </p>
+      <ul className="list-disc list-inside text-gray-700 mt-2 space-y-1">
+        <li>Canvas 2D를 이용한 비트맵 렌더링 및 픽셀 단위 조정</li>
+        <li>ImageBitmap을 활용한 대용량 이미지의 효율적인 디코딩</li>
+        <li>Blob, File API를 통한 최종 압축 이미지 파일 생성 및 다운로드</li>
+        <li>지원되는 환경에서는 OffscreenCanvas로 메인 UI를 멈추지 않고 작업 처리</li>
+      </ul>
+      <p className="mt-3 text-gray-700 leading-relaxed">
+        이러한 방식 덕분에, 일반적인 사용 흐름에서는 이미지가 외부 서버에 장기간 저장되지 않고,
+        사용자가 작업을 마친 후에는 브라우저를 닫는 것만으로도 대부분의 데이터가 정리됩니다.
+      </p>
+    </div>
+  </section>
+);
 
 const KoCompressPage = ({ tool = 'compress' }) => {
   const details = toolDetails[tool];
@@ -271,7 +342,12 @@ const KoCompressPage = ({ tool = 'compress' }) => {
         />
       )}
 
-      {tool !== 'compress-pdf' && <ExtraContent tool={tool} />}
+      {tool !== 'compress-pdf' && (
+        <>
+          <ExtraContent tool={tool} />
+          <TechnicalDeepSection />
+        </>
+      )}
     </>
   );
 };

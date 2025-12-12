@@ -9,7 +9,7 @@ const Footer = () => {
     const footerText = {
         about: isKorean ? "소개" : "About",
         contact: isKorean ? "문의하기" : "Contact",
-        legal: isKorean ? "법적 고지" : "Legal",
+        legal: isKorean ? "약관 및 개인정보 처리방침" : "Terms & Privacy",
         rights: isKorean ? "© 2025 BearCompress. 모든 권리 보유." : "© 2025 BearCompress. All Rights Reserved.",
     };
 

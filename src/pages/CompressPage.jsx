@@ -95,12 +95,9 @@ const toolDetails = {
     ),
     slug: '/compress/heic',
   },
-
-  // PDF는 그대로 제외
-  // 'compress-pdf': { ... }
 };
 
-// 포맷 이름(문장에 넣어서 쓸 label)
+// 포맷 이름
 const formatLabels = {
   compress: 'images',
   'compress-jpg': 'JPG/JPEG images',
@@ -109,12 +106,15 @@ const formatLabels = {
   'compress-heic': 'HEIC images',
 };
 
+/* ---------------------------
+   Extra Content (기존 유지)
+----------------------------*/
 const ExtraContent = ({ tool }) => {
   const label = formatLabels[tool] || 'images';
 
   return (
     <section className="max-w-4xl mx-auto mt-16 text-left text-gray-800 space-y-10">
-      {/* 설명 */}
+
       <div>
         <h2 className="text-2xl font-semibold mb-3">What is image compression?</h2>
         <p className="leading-relaxed text-gray-700">
@@ -124,11 +124,8 @@ const ExtraContent = ({ tool }) => {
         </p>
       </div>
 
-      {/* 언제 유용한지 */}
       <div>
-        <h2 className="text-2xl font-semibold mb-3">
-          When should you compress {label}?
-        </h2>
+        <h2 className="text-2xl font-semibold mb-3">When should you compress {label}?</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>When you need to upload images to blogs, portfolios, or social media quickly.</li>
           <li>When large photos are slowing down your website or landing pages.</li>
@@ -137,78 +134,92 @@ const ExtraContent = ({ tool }) => {
         </ul>
       </div>
 
-      {/* How it works */}
       <div>
         <h2 className="text-2xl font-semibold mb-3">How BearCompress works</h2>
         <ol className="list-decimal list-inside space-y-2 text-gray-700">
-          <li>Click <span className="font-semibold">“Select Images”</span> or drag &amp; drop your files into the box.</li>
-          <li>Choose your preferred compression level (Balanced, High quality, or Smaller size).</li>
-          <li>We process everything directly in your browser — no sign-up and no watermark.</li>
-          <li>Preview the results and download the optimized images with a single click.</li>
+          <li>Click “Select Images” or drag & drop your files into the box.</li>
+          <li>Choose your preferred compression level.</li>
+          <li>We process everything directly in your browser — no upload, no tracking.</li>
+          <li>Preview and download optimized images instantly.</li>
         </ol>
       </div>
 
-      {/* Tips */}
       <div>
         <h2 className="text-2xl font-semibold mb-3">Tips for the best results</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Start with the Balanced preset, then switch to Stronger compression only if you need smaller files.</li>
-          <li>For photos with lots of detail, keep quality a bit higher to avoid visible artifacts.</li>
-          <li>For thumbnails or small UI icons, you can safely use stronger compression.</li>
-          <li>Keep an original copy of important images in case you want to re-compress them differently later.</li>
+          <li>Start with the Balanced preset.</li>
+          <li>Increase compression only when file size matters more than detail.</li>
+          <li>Icons, thumbnails, UI graphics compress extremely well.</li>
+          <li>Keep original copies of important images.</li>
         </ul>
       </div>
 
-      {/* FAQ */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-4">Frequently Asked Questions</h2>
-        <div className="space-y-4">
-          <div>
-            <h3 className="font-semibold text-lg mb-1">
-              Are my images safe when I use BearCompress?
-            </h3>
-            <p className="text-gray-700 leading-relaxed">
-              Yes. BearCompress is designed to run directly in your browser. Your files stay on your
-              device and are not stored on our servers, so you remain in full control of your images.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-lg mb-1">
-              Does compression reduce image quality?
-            </h3>
-            <p className="text-gray-700 leading-relaxed">
-              Any lossy compression can affect quality, but our engine focuses on keeping images
-              clear and sharp. In most cases you&apos;ll get a much smaller file with no noticeable
-              difference to the naked eye.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-lg mb-1">
-              Is there a limit to how many files I can compress?
-            </h3>
-            <p className="text-gray-700 leading-relaxed">
-              You can use the tool as often as you like. For the smoothest experience, we recommend
-              compressing batches of images instead of thousands of files at once.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-lg mb-1">
-              Which formats does BearCompress support?
-            </h3>
-            <p className="text-gray-700 leading-relaxed">
-              BearCompress works with JPG, PNG, WebP, and HEIC on this page. If you need to convert
-              between formats, you can switch to the Image Converter from the navigation.
-            </p>
-          </div>
-        </div>
-      </div>
     </section>
   );
 };
 
+/* ---------------------------
+   추가할 TechnicalDeepSection
+----------------------------*/
+const TechnicalDeepSection = () => (
+  <section className="max-w-4xl mx-auto mt-20 text-gray-800 space-y-10">
+
+    <div>
+      <h2 className="text-2xl font-semibold mb-3">Technical Breakdown of Image Compression</h2>
+      <p className="leading-relaxed text-gray-700">
+        Image compression works by reducing redundant or non-essential visual information.
+        BearCompress performs all operations locally using Canvas 2D, ImageBitmap decoding,
+        and optimized encoding paths for each file type. Nothing is uploaded, ensuring complete privacy.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-2">JPEG Compression (DCT-Based)</h3>
+      <p className="text-gray-700">
+        JPEG divides images into 8×8 blocks and applies a Discrete Cosine Transform (DCT).
+        High-frequency data is reduced through quantization, while Huffman coding compresses repetitive patterns.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-2">PNG Compression (Lossless)</h3>
+      <p className="text-gray-700">
+        PNG uses DEFLATE, a combination of LZ77 and Huffman coding. Scanline filters reduce differences
+        between pixels to improve compression efficiency.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-2">WebP Compression</h3>
+      <p className="text-gray-700">
+        WebP lossy uses VP8-style prediction, while lossless WebP uses local color transforms and dictionary coding.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-xl font-semibold mb-2">HEIC (HEVC-Based)</h3>
+      <p className="text-gray-700">
+        HEIC relies on HEVC intra-frame compression including directional prediction, quad-tree partitioning,
+        and CABAC entropy coding. BearCompress decodes HEIC in-browser before recompressing.
+      </p>
+    </div>
+
+    <div>
+      <h2 className="text-2xl font-semibold mb-3">Local Browser Processing</h2>
+      <ul className="list-disc list-inside text-gray-700 space-y-1">
+        <li>Canvas 2D for bitmap manipulation</li>
+        <li>ImageBitmap for efficient decoding</li>
+        <li>Blob/File API for generating downloadable output</li>
+        <li>OffscreenCanvas (when available) for smoother performance</li>
+      </ul>
+    </div>
+
+  </section>
+);
+
+/* ---------------------------
+   CompressPage (최종)
+----------------------------*/
 const CompressPage = ({ tool = 'compress' }) => {
   const details = toolDetails[tool];
   const pageUrl = `https://bearcompress.com${details.slug}`;
@@ -257,21 +268,22 @@ const CompressPage = ({ tool = 'compress' }) => {
       />
 
       <div className="text-center mb-8">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
-          {details.h1}
-        </h1>
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">{details.h1}</h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">{details.p}</p>
       </div>
 
-      {/* 메인 툴 영역 */}
       {tool === 'compress-pdf' ? (
         <CompressPdf />
       ) : (
         <CompressImages initialFiles={initialFiles} />
       )}
 
-      {/* PDF 말고 이미지 툴에서만 설명/FAQ 노출 */}
-      {tool !== 'compress-pdf' && <ExtraContent tool={tool} />}
+      {tool !== 'compress-pdf' && (
+        <>
+          <ExtraContent tool={tool} />
+          <TechnicalDeepSection />
+        </>
+      )}
     </>
   );
 };

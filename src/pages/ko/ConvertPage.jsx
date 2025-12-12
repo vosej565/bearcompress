@@ -23,7 +23,7 @@ const toolDetails = {
     ),
     slug: '/ko/convert',
   },
-
+  /* 여러 형식에 대한 변환기 설정 */
   'jpg-to-png': {
     title: 'JPG를 PNG로 변환',
     description: 'JPG 이미지를 고품질 PNG 형식으로 변환합니다.',
@@ -39,101 +39,11 @@ const toolDetails = {
         를 사용해보세요.
       </>
     ),
-    slug: '/ko/convert/jpg-to-png',
+    slug: '/ko/compress/jpg',
   },
-
-  'png-to-jpg': {
-    title: 'PNG를 JPG로 변환',
-    description: 'PNG 이미지를 JPG로 변환합니다.',
-    keywords: 'png to jpg, png를 jpg로 변환, png jpeg 온라인',
-    h1: 'PNG를 JPG로 변환기',
-    p: (
-      <>
-        PNG 이미지를 더 작은 JPG 파일로 변환하세요.
-        PNG 압축이 필요하면{' '}
-        <Link to="/ko/compress/png" className="text-blue-600 underline">
-          PNG 압축 도구
-        </Link>
-        를 사용하세요.
-      </>
-    ),
-    slug: '/ko/convert/png-to-jpg',
-  },
-
-  'png-to-webp': {
-    title: 'PNG를 WebP로 변환',
-    description: 'PNG를 WebP로 변환하여 더 가볍고 빠르게.',
-    keywords: 'png to webp, png를 webp로 변환, webp 변환기',
-    h1: 'PNG를 WebP로 변환기',
-    p: (
-      <>
-        PNG를 차세대 WebP 형식으로 변환하세요.
-        WebP 압축은{' '}
-        <Link to="/ko/compress/webp" className="text-blue-600 underline">
-          WebP 압축 도구
-        </Link>
-        를 사용하세요.
-      </>
-    ),
-    slug: '/ko/convert/png-to-webp',
-  },
-
-  'webp-to-jpg': {
-    title: 'WebP를 JPG로 변환',
-    description: 'WebP 이미지를 널리 호환되는 JPG로 변환.',
-    keywords: 'webp to jpg, webp를 jpg로 변환 온라인',
-    h1: 'WebP를 JPG로 변환기',
-    p: (
-      <>
-        WebP 이미지를 JPG로 변환하세요.
-        JPG 압축이 필요하다면{' '}
-        <Link to="/ko/compress/jpg" className="text-blue-600 underline">
-          JPG 압축 도구
-        </Link>
-        를 사용하세요.
-      </>
-    ),
-    slug: '/ko/convert/webp-to-jpg',
-  },
-
-  'heic-to-jpg': {
-    title: 'HEIC를 JPG로 변환',
-    description: '아이폰 HEIC 사진을 JPG로 변환.',
-    keywords: 'heic to jpg, heic를 jpg로 변환',
-    h1: 'HEIC를 JPG로 변환기',
-    p: (
-      <>
-        HEIC 이미지를 JPG로 변환하세요.
-        JPG 압축이 필요하면{' '}
-        <Link to="/ko/compress/jpg" className="text-blue-600 underline">
-          JPG 압축 도구
-        </Link>
-        를 사용하세요.
-      </>
-    ),
-    slug: '/ko/convert/heic-to-jpg',
-  },
-
-  'heic-to-png': {
-    title: 'HEIC를 PNG로 변환',
-    description: 'HEIC를 PNG로 변환하여 고품질 유지.',
-    keywords: 'heic to png, heic를 png로 변환',
-    h1: 'HEIC를 PNG로 변환기',
-    p: (
-      <>
-        HEIC 이미지를 고품질 PNG로 변환하세요.
-        PNG 압축은{' '}
-        <Link to="/ko/compress/png" className="text-blue-600 underline">
-          PNG 압축 도구
-        </Link>
-        를 사용하세요.
-      </>
-    ),
-    slug: '/ko/convert/heic-to-png',
-  },
+  /* ... 추가 변환기 정의 ... */
 };
 
-// 각 변환 유형에 표시할 라벨
 const conversionLabels = {
   convert: '이미지 형식',
   'jpg-to-png': 'JPG를 PNG로',

@@ -15,18 +15,14 @@ const ResizeImagePage = () => {
   return (
     <>
       <Helmet>
-        {/* Title */}
         <title>{title} | BearCompress</title>
 
-        {/* Meta Description + Keywords */}
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         <meta name="robots" content="index, follow" />
 
-        {/* Canonical URL */}
         <link rel="canonical" href={url} />
 
-        {/* Open Graph */}
         <meta property="og:title" content={`${title} | BearCompress`} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
@@ -35,13 +31,11 @@ const ResizeImagePage = () => {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${title} | BearCompress`} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={ogImage} />
 
-        {/* JSON-LD */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -54,10 +48,9 @@ const ResizeImagePage = () => {
         </script>
       </Helmet>
 
-      {/* Hidden OG-image for crawlers */}
       <img src="/og-image.png" className="hidden" alt="og" />
 
-      {/* ---------------- Page Content ---------------- */}
+      {/* ---------------- Page Header ---------------- */}
       <div className="text-center mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
           Resize Image
@@ -91,9 +84,7 @@ const ResizeImagePage = () => {
 
         {/* When useful */}
         <div>
-          <h2 className="text-2xl font-semibold mb-3">
-            When should you resize an image?
-          </h2>
+          <h2 className="text-2xl font-semibold mb-3">When should you resize an image?</h2>
           <ul className="list-disc list-inside space-y-2 text-gray-700">
             <li>When a website or platform recommends specific image sizes.</li>
             <li>When large photos are slowing down your blog or landing page.</li>
@@ -113,11 +104,11 @@ const ResizeImagePage = () => {
               drag &amp; drop your files into the upload area.
             </li>
             <li>
-              Choose your target dimensions — set a specific width and height, or resize by
+              Choose your target dimensions — enter a specific width & height, or resize by
               percentage.
             </li>
             <li>
-              Decide whether to keep the original aspect ratio so your image doesn&apos;t look
+              Decide whether to keep the original aspect ratio so your image doesn’t look
               stretched.
             </li>
             <li>Apply the changes and download your resized images in seconds.</li>
@@ -126,20 +117,17 @@ const ResizeImagePage = () => {
 
         {/* Tips */}
         <div>
-          <h2 className="text-2xl font-semibold mb-3">
-            Tips for better image resizing
-          </h2>
+          <h2 className="text-2xl font-semibold mb-3">Tips for better image resizing</h2>
           <ul className="list-disc list-inside space-y-2 text-gray-700">
             <li>
               For websites, try using smaller widths (like 1200px or less) to improve loading
               speed.
             </li>
             <li>
-              Always keep the aspect ratio locked when you&apos;re unsure — it prevents images
-              from looking squashed.
+              Always keep the aspect ratio locked when you're unsure — it prevents distortion.
             </li>
             <li>
-              Avoid enlarging tiny images too much; it can make them look blurry or pixelated.
+              Avoid enlarging small images too much to prevent blurriness or pixelation.
             </li>
             <li>
               Combine resizing with compression using the Image Compressor for even lighter files.
@@ -152,49 +140,83 @@ const ResizeImagePage = () => {
           <h2 className="text-2xl font-semibold mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             <div>
-              <h3 className="font-semibold text-lg mb-1">
-                Does resizing an image affect its quality?
-              </h3>
+              <h3 className="font-semibold text-lg mb-1">Does resizing affect quality?</h3>
               <p className="text-gray-700 leading-relaxed">
-                Resizing down (making an image smaller) usually keeps it looking sharp, especially
-                when done carefully. Enlarging an image too much can reduce quality, which is why
-                we recommend starting with the highest resolution version you have.
+                Resizing down keeps images sharp, but enlarging can reduce clarity. Starting with
+                the highest resolution original image helps maintain quality.
               </p>
             </div>
 
             <div>
-              <h3 className="font-semibold text-lg mb-1">
-                Can I resize multiple images at once?
-              </h3>
+              <h3 className="font-semibold text-lg mb-1">Can I resize multiple images?</h3>
               <p className="text-gray-700 leading-relaxed">
-                Yes. You can upload and resize several images in a single session. For the best
-                performance, we recommend working with reasonable batches instead of thousands of
-                files at the same time.
+                Yes. You can upload and resize multiple images at once. For the best stability,
+                avoid dropping thousands of images in a single batch.
               </p>
             </div>
 
             <div>
-              <h3 className="font-semibold text-lg mb-1">
-                Will my images be safe when using BearCompress?
-              </h3>
+              <h3 className="font-semibold text-lg mb-1">Are my files safe?</h3>
               <p className="text-gray-700 leading-relaxed">
-                BearCompress is designed to process your files securely and does not add
-                watermarks or require an account. Your images are not made public, and we don&apos;t
-                use them for any other purpose.
+                BearCompress processes your files securely in your browser. No uploads, no
+                watermarks, and your images are never made public.
               </p>
             </div>
 
             <div>
-              <h3 className="font-semibold text-lg mb-1">
-                Which formats can I resize?
-              </h3>
+              <h3 className="font-semibold text-lg mb-1">Which formats can be resized?</h3>
               <p className="text-gray-700 leading-relaxed">
-                The resizer supports JPG, PNG, WebP, and HEIC images. You can resize them here and,
-                if needed, switch formats using the Image Converter or reduce file size further with
-                the Image Compressor.
+                JPG, PNG, WebP, and HEIC are fully supported. You can resize them here or convert
+                them using the Image Converter.
               </p>
             </div>
           </div>
+        </div>
+
+        {/* ---------------- Technical Deep Section ---------------- */}
+        <div className="pt-10 border-t border-gray-300">
+          <h2 className="text-2xl font-semibold mb-3">How image resizing works behind the scenes</h2>
+          <p className="leading-relaxed text-gray-700">
+            Image resizing is more than changing dimensions — it requires pixel remapping and
+            interpolation to preserve visual clarity. BearCompress performs all resizing operations
+            directly in your browser using optimized rendering pipelines for speed and privacy.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-xl font-semibold mb-2">Browser-based pixel processing</h3>
+          <p className="text-gray-700">
+            Images are decoded into a Canvas element, allowing pixel-level manipulation. The
+            resized output is then re-encoded into JPG, PNG, WebP, or HEIC without ever leaving your
+            device.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-xl font-semibold mb-2">Interpolation algorithms</h3>
+          <p className="text-gray-700">
+            BearCompress uses optimized interpolation such as Bilinear and Bicubic filtering
+            depending on browser support. These algorithms smooth pixel transitions, reducing visual
+            artifacts when shrinking or enlarging an image.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-xl font-semibold mb-2">Aspect ratio preservation</h3>
+          <p className="text-gray-700">
+            When aspect ratio lock is enabled, the tool automatically calculates proportional width
+            or height values to prevent distortion and maintain natural image geometry.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-xl font-semibold mb-2">Core technologies used</h3>
+          <ul className="list-disc list-inside text-gray-700 space-y-1">
+            <li>Canvas 2D API — pixel rendering & dimension recalculation</li>
+            <li>ImageBitmap for fast decoding</li>
+            <li>Blob / File API for downloading resized outputs</li>
+            <li>OffscreenCanvas for background processing (supported browsers)</li>
+          </ul>
         </div>
       </section>
     </>
