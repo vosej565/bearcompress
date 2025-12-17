@@ -111,7 +111,7 @@ const HomePage = () => {
         "@type": "WebSite",
         "url": "https://bearcompress.com/",
         "name": "BearCompress",
-        "description": "Free online image compressor, resizer, and converter for JPG, PNG, WebP, and HEIC.",
+        "description": "Free online image compressor, resizer, and converter for JPG, PNG, WebP, and HEIC."
       }
     `}
         </script>
