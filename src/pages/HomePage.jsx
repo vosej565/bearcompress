@@ -112,11 +112,6 @@ const HomePage = () => {
         "url": "https://bearcompress.com/",
         "name": "BearCompress",
         "description": "Free online image compressor, resizer, and converter for JPG, PNG, WebP, and HEIC.",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://bearcompress.com/search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
       }
     `}
         </script>
@@ -163,11 +158,7 @@ const HomePage = () => {
         </script>
       </Helmet>
 
-		 <img
-     	 src="/og-image.png"
-     	 alt="BearCompress - Image Tools"
-     	 className="hidden"
-    	/>
+		 
 
       <section className="text-center py-16 md:py-24">
         <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">

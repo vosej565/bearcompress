@@ -49,7 +49,7 @@ const KoResizeImagePage = () => {
         </script>
       </Helmet>
 
-      <img src="/og-image.png" className="hidden" alt="og" />
+      
 
       {/* ---------------- Page Content ---------------- */}
       <div className="text-center mb-8">

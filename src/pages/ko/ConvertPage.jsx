@@ -304,7 +304,7 @@ const KoConvertPage = ({ tool = 'convert' }) => {
         </script>
       </Helmet>
 
-      <img src="/og-image.png" alt="og-image" className="hidden" />
+      
 
       <div className="text-center mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">

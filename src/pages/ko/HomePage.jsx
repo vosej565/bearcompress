@@ -119,11 +119,6 @@ const KoHomePage = () => {
         "url": "https://bearcompress.com/ko",
         "name": "BearCompress",
         "description": "JPG, PNG, WebP, HEIC용 무료 온라인 이미지 압축기, 변환기 및 리사이즈 도구.",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://bearcompress.com/search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
       }
     `}
         </script>

@@ -48,7 +48,7 @@ const ResizeImagePage = () => {
         </script>
       </Helmet>
 
-      <img src="/og-image.png" className="hidden" alt="og" />
+      
 
       {/* ---------------- Page Header ---------------- */}
       <div className="text-center mb-8">
